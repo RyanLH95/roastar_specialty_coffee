@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Badge, Box, IconButton } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Badge } from '@mui/material'
 import { matchPath, useLocation, NavLink } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
 import { AnimatePresence } from 'framer-motion'
 import Cart from './Cart.jsx'
-/* import { shades } from '../theme.js' */
+import { shades } from '../theme.js'
 import Logo from './Logo.jsx'
 import '../App.css'
 import MobileNav from './MobileNav.jsx'
