@@ -2,7 +2,7 @@ import React from 'react'
 import InstagramIcon  from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Link, useLocation } from 'react-router-dom'
-import { Instagram, Facebook, Copyright } from 'lucide-react'
+import { Copyright } from 'lucide-react'
 import '../App.css'
 
 const withouSidebarRoutes = ["/submit"];
@@ -46,7 +46,7 @@ const Footer = () => {
                   position: 'relative',
                   top: '-0.05em'
                 }}
-             />
+            />
             </Link>
           </p>
         </div>
