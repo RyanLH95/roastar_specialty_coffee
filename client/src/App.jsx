@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import AboutUs from './pages/AboutUs/AboutUs'
 import ContactUs from './pages/ContactUs/ContactUs'
+import Careers from './pages/Careers/Careers'
+import Submit from './pages/Careers/Submit'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import './App.css'
@@ -18,6 +20,9 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/AboutUs' element={<AboutUs/>}/>
           <Route path='/ContactUs' element={<ContactUs/>}/>
+          <Route path='/Careers' element={<Careers/>}/>
+          {/* Other Pages */}
+          <Route path='submit' element={<Submit />}/>
         </Routes>
         <Footer />
       </Router>
