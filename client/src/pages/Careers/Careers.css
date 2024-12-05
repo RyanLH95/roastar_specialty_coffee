@@ -6,8 +6,9 @@
 }
 
 .careers-header h1 {
-  font-size: 40px;
-  font-weight: 200;
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
   color: var(--main-beige)
 }
 
@@ -24,12 +25,13 @@
 
 .app-content h2 {
   position: relative;
-  top: 3.4em;
+  top: 4.1em;
   color: white;
   z-index: 2;
+  letter-spacing: 1.5px;
   text-align: center;
-  font-size: 50px;
-  font-weight: 400;
+  font-size: 40px;
+  font-weight: 500;
 }
 
 .careers-image {
@@ -52,8 +54,9 @@
 
 .app-text h3 {
   color: var(--main-green);
-  font-weight: 400;
-  font-size: 30px;
+  font-weight: 500;
+  font-size: 1.88rem;
+  letter-spacing: 1.5px;
 }
 
 .app-text p {
@@ -68,7 +71,8 @@
 }
 
 .apply p {
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: 1.5px;
 }
 
 .apply-btn {

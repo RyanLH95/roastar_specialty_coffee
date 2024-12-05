@@ -104,6 +104,13 @@
   font-weight: 500;
   cursor: pointer;
   margin-top: 1em;
+  transition: background 300ms, color 300ms;
+}
+
+.message-submit-btn:hover {
+  background: hsla(0, 0%, 92%, 0.3);
+  color: black;
+  transition: background 300ms, color 300ms;
 }
 
 .message-submit-btn:disabled {
@@ -112,8 +119,9 @@
   transform: scale(1) !important;
 }
 
-.message-submit-btn:active {
-  transform: scale(0.98);
+.message-submit-btn:hover:disabled {
+  background: var(--btn-green);
+  color: white;
 }
 
 .sent-confirm {
@@ -137,10 +145,10 @@
   margin-top: 8em;
 }
 
-.map-container h1 {
+.map-container .google-maps-title {
   color: var(--main-green);
-  font-size: 2.4rem;
-  font-weight: 500;
+  font-size: 2rem;
+  font-weight: 600;
   letter-spacing: 1.5px;
   margin-bottom: 0.5em;
 }
@@ -152,7 +160,8 @@
 }
 
 .map-container p {
-  font-weight: 500;
+  font-weight: 600;
+  color: rgb(175, 175, 175);
   letter-spacing: 1.5px;
 }
 

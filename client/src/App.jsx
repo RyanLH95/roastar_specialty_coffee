@@ -10,7 +10,6 @@ import Footer from './components/Footer'
 import './App.css'
 
 function App() {
-
   return (
     <div className='app'>
       <Router>
@@ -22,6 +21,7 @@ function App() {
           <Route path='/ContactUs' element={<ContactUs/>}/>
           <Route path='/Careers' element={<Careers/>}/>
           {/* Other Pages */}
+          {/* Submit page for when application is sent from '/Careers' */}
           <Route path='submit' element={<Submit />}/>
         </Routes>
         <Footer />

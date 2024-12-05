@@ -18,7 +18,7 @@ const GoogleMaps = () => {
   return (
     <section id="location" className='map-container'>
       {/* Map title */}
-      <h1>OUR LOCATION</h1>
+      <h2 className='google-maps-title'>LOCATION</h2>
       <h2>ROASTAR SPECIALTY COFFEE</h2>
       <p>8 EAST ST, BROMLEY, BR1 1QX</p>
       {/* Map content */}
