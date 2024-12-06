@@ -8,6 +8,7 @@ import Submit from './pages/Careers/Submit'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import './App.css'
+import Shop from './pages/Shop/Shop'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/AboutUs' element={<AboutUs/>}/>
           <Route path='/ContactUs' element={<ContactUs/>}/>
           <Route path='/Careers' element={<Careers/>}/>
+          <Route path='/Shop' element={<Shop />}/>
           {/* Other Pages */}
           {/* Submit page for when application is sent from '/Careers' */}
           <Route path='submit' element={<Submit />}/>
