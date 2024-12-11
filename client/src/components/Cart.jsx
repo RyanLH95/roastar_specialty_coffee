@@ -9,23 +9,30 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { cartAnimate } from '../assets/popups/cart/animation'
 
 const Cart = ({ handleClose }) => {
+  // State to increase or decrease quantity of product
   const [counter, setCounter] = useState(1);
-  
+
+  // Cart state and dispatch() here
   const cart = useSelector((state) => state.cart);
+  console.log(cart)
   const dispatch = useDispatch();
 
+  // Removes product from cart
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
   }
 
+  // Clears whole cart
   const handleClearCart = () => {
     dispatch(clearCart());
   }
 
+  // Increase amount
   const handleClickPlus = () => {
     setCounter(counter + 1);
   };
 
+  // Decrease amount
   const handleClickMinus = () => {
     setCounter(counter => Math.max(counter - 1, 1))
   }
@@ -58,37 +65,40 @@ const Cart = ({ handleClose }) => {
             {/* CART CONTENT */}
             <div className='cart-content'>
               {cart.length === 0 ? (
-              <div className='cart-is-empty'>
-                <p className=''>Your Cart Is Empty.</p>
-              </div>
+                <div className='cart-is-empty'>
+                  <p className=''>YOUR CART IS EMPTY</p>
+                </div>
               ) : (
                 <>
                   <div className='cart-item-container'>
                     {cart.map((item) => (
-                      <>
                       <div className='cart-item' key={item.id}>
-                        <div className='cart-details'>
-                          <img src={item.image} alt={item.title} width={70}/>
+                        <div className='cart-details' >
+                          <Link to={`/product/${item.handle}`} className='cart-image-link' reloadDocument>
+                            <img src={item.image} alt={item.title} width={100}/>
+                          </Link>
                           <div className='cart-details-two'>
-                            <h5>{item.title}</h5>
+                            <Link to={`/product/${item.handle}`} style={{textDecoration: 'none', color: 'black'}} reloadDocument>
+                              <h5>{item.title}</h5>
+                            </Link>
                             {/*<p>£{item.price.toFixed(2)}</p>*/}
                             <div className='cart-details-three'>
                               <div className='cart-quantity-handle'>
-                                <button onClick={handleClickMinus} className='cart-button-minus'><Minus size={10}/></button>
+                                <button  onClick={handleClickMinus} className='cart-button-minus'><Minus size={10}/></button>
                                   <p className='cart-quantity'>{counter}</p>
                                 <button onClick={handleClickPlus} className='cart-button-plus'><Plus size={10}/></button>
                               </div>
-                              <h5>{item.variant}</h5>
+                              <h5>{item.variant.toUpperCase()}</h5>
                             </div>
                           </div>
-                          <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
-                          <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
+                          <div className='cart-handle'>
+                            <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
+                            <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
+                          </div>
                         </div>
-                        <div className='hr-bottom'/>
                       </div>
-                      <div className='hr'/>
-                      </>
                     ))}
+                    {/* BOTTOM SECTION OF CART */}
                     <button className='clear' onClick={handleClearCart}>CLEAR CART</button>
                   </div>
                   <div className='cart-bottom-section'>

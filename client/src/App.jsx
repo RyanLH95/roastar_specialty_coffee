@@ -9,8 +9,10 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import './App.css'
 import Shop from './pages/Shop/Shop'
+import ProductPage from './pages/ProductPage/ProductPage'
 
 function App() {
+ 
   return (
     <div className='app'>
       <Router>
@@ -23,7 +25,7 @@ function App() {
           <Route path='/Careers' element={<Careers/>}/>
           <Route path='/Shop' element={<Shop />}/>
           {/* Other Pages */}
-          {/* Submit page for when application is sent from '/Careers' */}
+          <Route path='/product/:handle' element={<ProductPage />}/>
           <Route path='submit' element={<Submit />}/>
         </Routes>
         <Footer />

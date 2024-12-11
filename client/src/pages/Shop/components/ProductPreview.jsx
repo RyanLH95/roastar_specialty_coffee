@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { previewAnimate } from '../../../assets/popups/product_preview/animation'
 import { addToCart } from '../../../store/state'
 import Backdrop from '../../../assets/popups/product_preview/Backdrop'
-import { ShoppingBag, X } from 'lucide-react'
+import { Plus, Minus, X } from 'lucide-react'
 import { fetchProduct } from '../../../../../server/api/shopify/products'
 
 const ProductPreview = ({ handle, handleClose }) => {
@@ -18,6 +18,7 @@ const ProductPreview = ({ handle, handleClose }) => {
     const getProduct = async () => {
       try {
         const data = await fetchProduct(handle);
+        console.log("Fetched product data:", data);
         setProduct(data);
         if (data.variants.edges.length > 0) {
           setSelectedVariant(data.variants.edges[0].node);
@@ -47,7 +48,17 @@ const ProductPreview = ({ handle, handleClose }) => {
   }
 
   const handleAddToCart = () => {
-    if (selectedVariant) {
+    if (selectedVariant && product) {
+      console.log({
+        id: selectedVariant.id,
+        title: product.title,
+        variant: selectedVariant.title,
+        price: parseFloat(selectedVariant.priceV2.amount),
+        quantity: counter,
+        image: product.images.edges[0]?.node.src,
+        handle: product.handle,
+      });
+
       dispatch(addToCart({
         id: selectedVariant.id,
         title: product.title,
@@ -55,9 +66,10 @@ const ProductPreview = ({ handle, handleClose }) => {
         price: parseFloat(selectedVariant.priceV2.amount),
         quantity: counter,
         image: product.images.edges[0]?.node.src,
-      }))
+        handle: product.handle,
+      }));
     }
-  }
+  };
 
   if (!product) return <p>Loading...</p>;
 
@@ -90,16 +102,16 @@ const ProductPreview = ({ handle, handleClose }) => {
               <h2 className='product-preview-price'>£{`${parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</h2>
               {/* QUANTITY/AMOUNT */}
               <div className='product-preview-quantity'>
-                <button className='product-preview-quantity-minus' onClick={handleClickMinus}>-</button>
-                  <p>{counter}</p>
-                <button className='product-preview-quantity-plus' onClick={handleClickPlus}>+</button>
+                <button className='product-preview-quantity-minus' onClick={handleClickMinus}><Minus size={15}/></button>
+                  <p className='product-preview-quantity-amount'>{counter}</p>
+                <button className='product-preview-quantity-plus' onClick={handleClickPlus}><Plus size={15}/></button>
               </div>
               {/* CHOICE OF TYPE(GRIND) */}
               <div className='product-preview-coffee-grind'>
                 <select onChange={(e) => handleVariantChange(e.target.value)} name='grind'>
                   {product.variants.edges.map(({ node }) => (
                     <option key={node.id} value={node.id}>
-                      {node.title} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
+                      {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
                     </option>
                   ))}
                 </select>

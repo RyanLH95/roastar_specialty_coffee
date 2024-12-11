@@ -484,17 +484,19 @@ body {
   margin-left: 1em;
 }
 
-/* if cart is empty */
 .cart-content {
   text-align: center;
 }
 
+/* If cart is EMPTY */
 .cart-content .cart-is-empty {
-  margin-top: 10em;
+  margin-top: 5em;
+  letter-spacing: 1.5px;
 }
 
+/* If cart has item(s) */
 .cart-item-container {
-  margin: 1.4em 1em;
+  margin: 1.4em 0.6em;
   overflow-y: auto;
   max-height: 25em;
   border-top: 1px solid hsl(0, 0%, 0%, 10%);
@@ -509,28 +511,40 @@ body {
 .cart-details {
   display: flex;
   height: 7em;
-  gap: 10px;
+}
+
+.cart-image-link {
+  position: relative;
+  display: inline-block;
 }
 
 .cart-details img {
   object-fit: contain;
-  margin-top: -2.6em;
+  height: 7rem;
+  filter: opacity(1);
+  transition: filter 300ms;
+}
+
+.cart-details img:hover {
+  filter: opacity(0.7);
+  transition: filter 300ms;
 }
 
 .cart-details .cart-price {
   letter-spacing: 1.5px;
-  margin-top: 2.3em;
 }
 
 .cart-price {
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .cart-details .cart-delete {
   cursor: pointer;
   border: none;
   background: none;
-  margin-top: 1.9em;
+  margin-top: 2.2rem; 
+  margin-right: 1rem;
+  margin-left: 1rem;
   height: 2.1em;
   color: var(--btn-green);
 }
@@ -539,11 +553,19 @@ body {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  margin-left: 1.5em;
+  margin-left: 1.2em;
 }
 
 .cart-details-two h5 {
   text-align: left;
+  color: black;
+  transition: color 300ms;
+  margin-right: 0.6rem;
+}
+
+.cart-details-two h5:hover {
+  color: var(--main-green);
+  transition: color 300ms;
 }
 
 .cart-details-two .cart-quantity {
@@ -556,7 +578,7 @@ body {
 }
 
 .cart-details-three {
-  gap: 20px;
+  gap: 10px;
   justify-content: center;
   display: flex;
 }
@@ -568,58 +590,65 @@ body {
 }
 
 .cart-quantity-handle {
-  margin-top: -0.5em;
+  position: relative;
+  top: -1.6em;
+  justify-content: center;
+  color: black;
+  border-radius: 5px;
+  margin-top: 1em;
   display: flex;
   gap: 0px;
+  background: white;
+  border: 1.5px solid black;
+  height: 2.3em;
+  width: 7em;
+  z-index: 10;
 }
 
-.cart-quantity-handle .cart-button-minus, 
-.cart-quantity-handle .cart-button-plus {
-  cursor: pointer;
-  background: transparent;
-  padding: 1em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  height: 2.5em;
-}
-
-.cart-button-minus {
-  background: transparent;
+.cart-quantity-handle .product-preview-quantity-minus {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  border: 1px solid black;
-  border-right: none;
 }
 
-.cart-button-plus {
-  background: transparent;
+.cart-quantity-handle .product-preview-quantity-plus {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  border: 1px solid black;
-  border-left: none;
-  transition: background 200ms;
 }
 
-.cart-button-minus:active, .cart-button-plus:active {
-  background: rgb(237, 237, 237);
-  color: white;
-  transition: background 200ms;
-}
-
-.cart-quantity-handle .cart-quantity {
+.cart-quantity-handle button {
   color: black;
+  width: 3rem;
+  cursor: pointer;
+  border: none;
+  padding: 0.4rem;
+  background: none;
+  transition: 
+    background 300ms,
+    color 300ms;
+}
+
+.cart-quantity-handle button:hover {
+  color: white;
+  background: black;
+  transition: 
+    background 300ms,
+    color 300ms;
+}
+
+.cart-quantity-handle p {
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.4em;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
   font-weight: 300;
-  padding-top: 0.3em;
-  width: 1.5em;
-  border: 1px solid black;
-  border-right: none;
-  border-left: none;
-  height: 5vh;
 }
 
 .cart-handle {
+  /* position: relative;
+  top: -1.9em; */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* column-reverse */
+  gap: 10px; 
 }
 
 .cart-item-container .clear {
@@ -630,7 +659,7 @@ body {
 }
 
 .cart-bottom-section {
-  width: max(92.5%, 23em);
+  width: max(92%, 21em);
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -660,7 +689,7 @@ body {
   font-weight: 600;
 }
 
-.d .checkout {
+.cart-bottom-section .checkout {
   margin-top: 1em;
 }
 
@@ -879,7 +908,7 @@ body {
 }
 
 .shop-container, body, html {
-  height: 95rem;
+  height: 90rem;
 }
 
 .shop-container {
@@ -940,6 +969,12 @@ body {
   .cart-black {
     color: white;
     border: 1.5px solid white;
+  }
+}
+
+@media all and (max-width: 1027px) {
+  .shop-container {
+    height: 120rem;
   }
 }
 
@@ -1098,6 +1133,12 @@ body {
 
   .careers-container, body, html {
     height: 80rem;
+  }
+}
+
+@media all and (max-width: 687px) {
+  .shop-container {
+    height: 195rem;
   }
 }
 

@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { fetchProducts } from '../../../../../server/api/shopify/products';
 import { AnimatePresence } from 'framer-motion';
 import ProductPreview from './ProductPreview';
+import Loader from './Loader';
 
 const Products = ({ addToCart }) => {
   const [productsList, setProductsList] = useState([]);
   const [loading, setLoading] = useState(true);
-  // State for Quickview/Preview of product
+  // State for popup/preview of product
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   // handles for opening and closing preview of product
@@ -15,6 +16,7 @@ const Products = ({ addToCart }) => {
   const handleCloseModal = () => setSelectedProduct(null)
 
   useEffect(() => {
+    // calls close of handle modal
     handleCloseModal();
 
     const getProducts = async () => {
@@ -31,7 +33,7 @@ const Products = ({ addToCart }) => {
     getProducts();
   }, []);
 
-  if (loading) return <div className='loading'><div className='loader'></div></div>;
+  if (loading) return <Loader />
   
   return (
     <div className="product-container">
@@ -54,9 +56,9 @@ const Products = ({ addToCart }) => {
                   width={300}
                 />
               )}
-              {/* <div dangerouslySetInnerHTML={{ __html: node.descriptionHtml }} /> */}
               <h2>{node.title}</h2>
               <div className='view-product'> 
+                {/* PREVIEW BUTTON OF PRODUCT DESKTOP/LAPTOP */}
                 <button 
                   onClick={(e) => {
                     e.preventDefault();
@@ -70,6 +72,17 @@ const Products = ({ addToCart }) => {
               </div>
             </Link>
             <p>£{`${parseFloat(node.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</p>
+            {/* PREVIEW BUTTON OF PRODUCT FOR TABLET/MOBILE ONLY */}
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                handleOpenModal(node.handle)
+              }} 
+              type='button'
+              className='pro'
+            >
+              PRODUCT PREVIEW
+            </button>
           </div>
         ))
       }

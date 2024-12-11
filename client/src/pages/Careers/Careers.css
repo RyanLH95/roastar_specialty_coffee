@@ -77,7 +77,7 @@
 
 .apply-btn {
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 1.5px;
   cursor: pointer;
   text-align: center;
@@ -165,7 +165,7 @@
   padding-left: 4.3vw;
   text-align: left;
   position: relative;
-  top: 2.7em;
+  top: 2.3rem;
   font-size: 12px;
   display: block;
   color: red;
@@ -175,9 +175,9 @@
 
 .form-content input {
   position: relative;
-  top: 2em;
+  top: 2rem;
   width: 80%;
-  height: 3em;
+  height: 40px;
   border: 1px solid hsl(0, 0%, 0%, 30%);
   border-radius: 5px;
   margin-top: 1em;
@@ -189,6 +189,7 @@
 }
 
 .job p {
+  letter-spacing: 0px;
   text-align: left;
   font-size: 14px;
   position: relative;
@@ -197,6 +198,7 @@
 }
 
 .rtw p {
+  letter-spacing: 0px;
   text-align: left;
   font-size: 14px;
   position: relative;
@@ -205,8 +207,11 @@
 }
 
 .form-content select {
+  background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%;
+  appearance: none;
   margin-top: 1em;
-  height: 3em;
+  padding-left: 1em;
+  height: 40px;
   width: 80%;
   border: 1px solid hsl(0, 0%, 0%, 30%);
   border-radius: 5px;
@@ -262,12 +267,11 @@
   text-align: center;
   cursor: pointer;
   width: 80%;
-  height: 3em;
+  height: 40px;;
   border: none;
   border-radius: 5px;
   color: white;
   background: var(--btn-green);
-  box-shadow: 1px 1px 5px 1px var(--btn-green);
 }
 
 .button-upload p {
@@ -306,7 +310,8 @@
   margin-left: -3em;
   margin-right: -3em;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 1rem;
   border-radius: 4px;
   letter-spacing: 1.5px;
   border: none;
@@ -330,6 +335,7 @@
 
 .submit-btn:hover:disabled {
   background: var(--btn-green);
+  color: white;
 }
 
 .submit-btn:active {

@@ -33,7 +33,7 @@
   justify-content: space-around;
   row-gap: 20px;
   padding: 1.5em;
-  column-gap: 2%;
+  column-gap: 40px;
   margin-left: -0.6em;
 }
 
@@ -47,7 +47,6 @@
   margin-top: 3em;
   position: relative;
   border: 2px solid hsl(0, 0%, 0%, 1%);
-  border-bottom: none;
   background-image: linear-gradient(1turn, hsl(0, 0%, 100%, 20%), hsla(0, 0%, 74%, 20%), hsl(0, 0%, 100%, 20%));
   padding: 0.5rem;
   padding-bottom: 2em;
@@ -94,7 +93,7 @@
     opacity 300ms;
 }
 
-.product-card button {
+.product-card .product-view {
   width: 60%;
   padding: 1rem;
   letter-spacing: 1.5px;
@@ -157,7 +156,7 @@
 
 .product-preview-main {
   background: white;
-  margin-top: 2em;
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
   margin-right: 10vw;
@@ -168,6 +167,7 @@
 
 .product-preview-main img {
   object-fit: contain;
+  width: 60%;
 }
 
 .product-preview-details {
@@ -188,14 +188,18 @@
 }
 
 .product-preview-coffee-grind select {
+  background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%;
+  appearance: none;
   cursor: pointer;
   height: 3.3rem;
   width: 100%;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  font-weight: 500;
   color: black;
   padding-left: 1em;
   border: 2px solid black;
   border-radius: 5px;
-  background: none;
   transition: 
     background 300ms, 
     border 300ms,
@@ -207,73 +211,74 @@
       color 300ms;
   }
   &:hover {
-    background: black;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I2ZmZmZmZjt9DQo8L3N0eWxlPg0KPHRpdGxlPmFycm93czwvdGl0bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEuNCw0LjcgMi41LDMuMiAzLjUsNC43ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4NCjwvc3ZnPg==) no-repeat 100% 50%, black;
     border: 2px solid black;
     color: white;
   }
 }
 
 .product-preview-quantity {
-  margin-top: 2em;
+  justify-content: center;
+  color: black;
+  border-radius: 5px; /* 0.3rem */
+  margin-top: 1rem;
+  padding-top: 0.3rem;
   display: flex;
   gap: 0px;
-}
-
-.product-preview-quantity button {
-  padding: 1em;
-  padding-top: 0.7em;
-  padding-bottom: 0.7em;
-  font-size: 1em;
-  color: black;
-  cursor: pointer;
+  background: white;
   border: 2px solid black;
-  background: none;
-  width: 3em;
-  transition: 
-    background 300ms, 
-    border 300ms,
-    color 300ms;
-  &:before {
-    transition: 
-      background 300ms,
-      border 300ms 
-      color 300ms;
-  }
-  &:hover {
-    background: black;
-    border: 2px solid black;
-    color: white;
-  }
-}
-
-.product-preview-quantity .product-preview-quantity-plus {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-left: none;
+  width: 10.7em;
 }
 
 .product-preview-quantity .product-preview-quantity-minus {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-right: none;
+  color: black;
+  width: 60px;
+  cursor: pointer;
+  border-top-left-radius: 3px;
+  border: none;
+  padding: 16px;
+  transition: 
+    background 300ms,
+    color 300ms;
 }
 
-.product-preview-quantity p {
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  margin-top: -0.5em;
-  padding-top: 0.7em;
+.product-preview-quantity .product-preview-quantity-plus {
   color: black;
-  background: none;
-  width: 2.5em;
-  border: 2px solid black;
-  border-left: none;
-  border-right: none;
+  width: 60px;
+  cursor: pointer;
+  border: none;
+  border-top-right-radius: 3px;
+  padding: 16px;
+  transition: 
+    background 300ms,
+    color 300ms;
+}
+
+.product-preview-quantity button:hover {
+  color: white;
+  background: black;
+  transition: 
+    background 300ms,
+    color 300ms;
+}
+
+.product-preview-quantity button:active {
+  color: rgb(237, 237, 237);
+  background: rgb(22, 22, 22);
+}
+
+.product-preview-quantity .product-preview-quantity-amount {
+  position: relative;
+  margin-top: 0.4rem;
+  margin-right: 1.4em;
+  margin-left: 1.4em;
+  font-variant-numeric: tabular-nums;
 }
 
 .product-preview-details .product-add-to-cart {
   letter-spacing: 1.5px;
   font-weight: 600;
+  font-size: 0.8rem;
   cursor: pointer;
   color: black;
   margin-top: 1.5em;
@@ -364,6 +369,11 @@
   animation: spin 2s linear infinite;
 }
 
+.pro {
+  display: none;
+  font-size: 0.8rem;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -373,4 +383,69 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media all and (max-width: 1000px) {
+  .view-product {
+    display: none;
+  }
+
+  .product-preview-content {
+    height: 65em;
+  }
+
+  .product-preview-main {
+    padding: 1em;
+    height: 53em;
+    margin-bottom: 40vw;
+  }
+
+  .product-preview-main {
+    display: block;
+  }
+
+  .product-preview-details {
+    justify-content: center;
+  }
+
+  .product-preview-details .product-preview-price {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  .product-preview-details .product-preview-quantity{
+    margin: auto;
+    width: 10.7em;
+  }
+
+  .product-preview-details .product-add-to-cart {
+    width: 100%;
+  }
+
+  .product-preview-details .product-purchase {
+    width: 100%;
+  }
+
+  .product-card .pro {
+    margin: auto;
+    margin-top: 1em;
+    width: 60%;
+    justify-content: center;
+  }
+
+  .pro {
+    /* background: black;
+    border: 1px solid black;
+    color: white;*/
+    background: none;
+    border: none;
+    color: black;
+    border-radius: 5px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+  }
 }

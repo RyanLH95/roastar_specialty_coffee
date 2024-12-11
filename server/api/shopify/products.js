@@ -64,6 +64,7 @@ export const fetchProduct = async (handle) => {
           productByHandle(handle: "${handle}") {
             id
             title
+            handle
             descriptionHtml
             images(first: 1) {
               edges {
@@ -92,4 +93,50 @@ export const fetchProduct = async (handle) => {
 
   const { data } = await response.json();
   return data.productByHandle;
+};
+
+export const fetchRelatedProducts = async () => {
+  const response = await fetch(import.meta.env.VITE_SHOPIFY_STORE_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': import.meta.env.VITE_SHOPIFY_API_ACCESS_TOKEN,
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        {
+          products(first: 5) {
+            edges {
+              node {
+                id
+                title
+                handle
+                descriptionHtml
+                images(first: 1) {
+                  edges {
+                    node {
+                      src
+                    }
+                  }
+                }
+                variants(first: 1) {
+                  edges {
+                    node {
+                      priceV2 {
+                        amount
+                      }
+                    }
+                  }
+                } 
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const { data } = await response.json();
+  return data.products.edges
 };
