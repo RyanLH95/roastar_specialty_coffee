@@ -99,7 +99,8 @@ const ProductPreview = ({ handle, handleClose }) => {
             )}
             <div className='product-preview-details'>
               {/* PRODUCT PRICE */}
-              <h2 className='product-preview-price'>£{`${parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</h2>
+              <h2 className='product-preview-price'>£{selectedVariant ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) : "0.00"}</h2>
+              {/* `${parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
               {/* QUANTITY/AMOUNT */}
               <div className='product-preview-quantity'>
                 <button className='product-preview-quantity-minus' onClick={handleClickMinus}><Minus size={15}/></button>

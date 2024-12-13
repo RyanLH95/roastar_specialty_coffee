@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { clearCart, removeFromCart } from '../store/state'
+import { clearCart, removeFromCart, updateQuantity } from '../store/state'
 import { motion } from 'framer-motion'
 import Backdrop from '../assets/popups/cart/Backdrop'
 import { Minus, Plus, X } from 'lucide-react'
@@ -9,9 +9,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { cartAnimate } from '../assets/popups/cart/animation'
 
 const Cart = ({ handleClose }) => {
-  // State to increase or decrease quantity of product
-  const [counter, setCounter] = useState(1);
-
   // Cart state and dispatch() here
   const cart = useSelector((state) => state.cart);
   console.log(cart)
@@ -27,17 +24,15 @@ const Cart = ({ handleClose }) => {
     dispatch(clearCart());
   }
 
-  // Increase amount
-  const handleClickPlus = () => {
-    setCounter(counter + 1);
-  };
-
-  // Decrease amount
-  const handleClickMinus = () => {
-    setCounter(counter => Math.max(counter - 1, 1))
+  const handleQuantityChange = (id, type) => {
+    const item = cart.find((item) => item.id === id);
+    if (item) {
+      const newQuantity = type === 'increment' ? item.quantity + 1 : Math.max(item.quantity - 1, 1);
+      dispatch(updateQuantity({ id, quantity: newQuantity }))
+    }
   }
 
-  const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((total, item) => total + item.quantity * item.price, 0);
 
   return (
     <>
@@ -78,22 +73,24 @@ const Cart = ({ handleClose }) => {
                             <img src={item.image} alt={item.title} width={100}/>
                           </Link>
                           <div className='cart-details-two'>
-                            <Link to={`/product/${item.handle}`} style={{textDecoration: 'none', color: 'black'}} reloadDocument>
-                              <h5>{item.title}</h5>
-                            </Link>
+                            <div className='cart-title-and-price'>
+                              <Link to={`/product/${item.handle}`} style={{textDecoration: 'none', color: 'black'}} reloadDocument>
+                                <h5 className='cart-title'>{item.title}</h5>
+                              </Link>
+                              <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
+                            </div>
                             {/*<p>£{item.price.toFixed(2)}</p>*/}
                             <div className='cart-details-three'>
-                              <div className='cart-quantity-handle'>
-                                <button  onClick={handleClickMinus} className='cart-button-minus'><Minus size={10}/></button>
-                                  <p className='cart-quantity'>{counter}</p>
-                                <button onClick={handleClickPlus} className='cart-button-plus'><Plus size={10}/></button>
+                              <div className='cart-d'>
+                                <div className='cart-quantity-handle'>
+                                  <button onClick={() => handleQuantityChange(item.id, 'decrement')} className='cart-button-minus'><Minus size={10}/></button>
+                                    <p className='cart-quantity'>{item.quantity}</p>
+                                  <button onClick={() => handleQuantityChange(item.id, 'increment')} className='cart-button-plus'><Plus size={10}/></button>
+                                </div>
+                                <h5 className='cart-variant'>{item.variant.toUpperCase()}</h5>
                               </div>
-                              <h5>{item.variant.toUpperCase()}</h5>
+                              <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
                             </div>
-                          </div>
-                          <div className='cart-handle'>
-                            <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
-                            <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
                           </div>
                         </div>
                       </div>
@@ -103,7 +100,7 @@ const Cart = ({ handleClose }) => {
                   </div>
                   <div className='cart-bottom-section'>
                     <p className='tax-and-shipping'>Tax and shipping is calculated at checkout</p>
-                    <p className='cart-subtotal'>SUBTOTAL<span>£{(counter * subtotal).toFixed(2)} GBP</span></p>
+                    <p className='cart-subtotal'>SUBTOTAL<span>£{subtotal.toFixed(2)} GBP</span></p>
                     <button className='checkout'>CHECKOUT</button>
                     <Link to='/Shop'><button className='continue'>CONTINUE SHOPPING</button></Link>
                   </div>

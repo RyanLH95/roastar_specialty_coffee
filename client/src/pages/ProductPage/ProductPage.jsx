@@ -125,7 +125,8 @@ const ProductPage = () => {
               {/* PRODUCT DETAILS */}
               <div className='product-desc' dangerouslySetInnerHTML={{ __html: productDetails.descriptionHtml }} />
               {/* PRODUCT PRICE */}
-              <h2>£{`${parseFloat(productDetails.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</h2>
+              <h2>£{selectedVariant ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) : "0.00"}</h2>
+              {/* `${parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
               {/* QUANTITY/AMOUNT */}
               <div className='product-quantity'>
                 <button className='product-quantity-minus' onClick={handleClickMinus}>
@@ -181,13 +182,11 @@ const ProductPage = () => {
                         width={200}
                       />
                     )}
-                    {/* <div dangerouslySetInnerHTML={{ __html: node.descriptionHtml }} /> */}
                     <h3>{node.title}</h3>
                     <div>
                       <button>PREVIEW PRODUCT</button>
                     </div>
                   </Link>
-                  {/* <p>£{`${parseFloat(node.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</p> */}
                 </div>
               ))
             }

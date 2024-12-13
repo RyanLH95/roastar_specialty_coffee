@@ -497,6 +497,7 @@ body {
 /* If cart has item(s) */
 .cart-item-container {
   margin: 1.4em 0.6em;
+  padding-bottom: 3rem;
   overflow-y: auto;
   max-height: 25em;
   border-top: 1px solid hsl(0, 0%, 0%, 10%);
@@ -506,6 +507,7 @@ body {
 .cart-item {
   height: 8em;
   margin-top: 1em;
+  margin-bottom: -1rem;
 }
 
 .cart-details {
@@ -530,21 +532,34 @@ body {
   transition: filter 300ms;
 }
 
+.cart-title-and-price {
+  display: flex;
+}
+
+.cart-title-and-price a {
+  display: inline-block;
+  margin-right: max(10%, 1rem);
+  margin-bottom: 1rem;
+}
+
 .cart-details .cart-price {
   letter-spacing: 1.5px;
 }
 
 .cart-price {
+  position: relative;
+  right: 0;
   font-weight: 500;
+  margin-left: 0rem;
 }
 
-.cart-details .cart-delete {
+.cart-delete {
+  position: relative;
+  top: -3.5rem;
+  margin-right: 0.6rem;
   cursor: pointer;
   border: none;
   background: none;
-  margin-top: 2.2rem; 
-  margin-right: 1rem;
-  margin-left: 1rem;
   height: 2.1em;
   color: var(--btn-green);
 }
@@ -552,18 +567,17 @@ body {
 .cart-details-two {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
   margin-left: 1.2em;
 }
 
-.cart-details-two h5 {
+.cart-details-two .cart-title {
   text-align: left;
   color: black;
   transition: color 300ms;
-  margin-right: 0.6rem;
 }
 
-.cart-details-two h5:hover {
+.cart-details-two .cart-title:hover {
   color: var(--main-green);
   transition: color 300ms;
 }
@@ -579,14 +593,26 @@ body {
 
 .cart-details-three {
   gap: 10px;
-  justify-content: center;
+}
+
+.cart-d {
+  gap: 10px;
   display: flex;
 }
 
-.cart-details-three h5 {
+.cart-details-three .cart-delete {
+  float: right;
+}
+
+.cart-details-three .cart-variant {
+  text-align: left;
+}
+
+.cart-variant {
   font-weight: 500;
-  font-size: 0.7em;
+  font-size: 0.6em;
   color: hsl(0, 0%, 0%, 50%);
+  margin-right: 3rem;
 }
 
 .cart-quantity-handle {
@@ -643,17 +669,9 @@ body {
   font-weight: 300;
 }
 
-.cart-handle {
-  /* position: relative;
-  top: -1.9em; */
-  display: flex;
-  flex-direction: column; /* column-reverse */
-  gap: 10px; 
-}
-
 .cart-item-container .clear {
   position: relative;
-  top: -1em;
+  top: 2rem;
   right: 0;
   left: 0;
 }

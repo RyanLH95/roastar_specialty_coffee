@@ -70,6 +70,7 @@
   margin-top: 1em;
   text-align: center;
   font-weight: 600;
+  letter-spacing: 1.5px;
 }
 
 .product-card .view-product {
@@ -269,7 +270,7 @@
 
 .product-preview-quantity .product-preview-quantity-amount {
   position: relative;
-  margin-top: 0.4rem;
+  top: 15%;
   margin-right: 1.4em;
   margin-left: 1.4em;
   font-variant-numeric: tabular-nums;

@@ -53,6 +53,15 @@ export const cartSlice = createSlice({
       saveCartToLocalStorage([]); // Clears cart in localStorage
       return [];
     },
+    
+    updateQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+      const item = state.find((item) => item.id === id);
+      if (item) {
+        item.quantity = quantity;
+      }
+      saveCartToLocalStorage(state);
+    }
   },
 });
 
@@ -66,6 +75,7 @@ export const {
   addToCart,
   removeFromCart,
   clearCart,
+  updateQuantity,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
