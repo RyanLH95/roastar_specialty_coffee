@@ -73,7 +73,7 @@ export const fetchProduct = async (handle) => {
                 }
               }
             }
-            variants(first: 4) {
+            variants(first: 12) {
               edges {
                 node {
                   id
