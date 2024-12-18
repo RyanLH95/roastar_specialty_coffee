@@ -65,14 +65,14 @@
 }
 
 .text-container-one h3 {
-  font-size: 34px;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 500;
   letter-spacing: 1.5px;
   color: var(--main-green);
 }
 
 .text-container-one p {
-  font-size: 24px;
+  font-size: 1.3rem;
   font-weight: 200;
   color: black;
   margin-top: 1em;
@@ -106,14 +106,14 @@
 }
 
 .bottom-section-text h3 {
-  font-size: 34px;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 500;
   letter-spacing: 1.5px;
   color: var(--main-green);
 }
 
 .bottom-section-text p {
-  font-size: 24px;
+  font-size: 1.3rem;
   font-weight: 200;
   color: black;
   margin-top: 1em;

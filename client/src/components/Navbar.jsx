@@ -25,7 +25,7 @@ const Navbar = () => {
     const { pathname } = useLocation();
     const active = useLocation().pathname; // returns current location and url
     const [colour, setColour] = useState(false); // changes the state of colour upon scrolling
-    const [cartOpen, setCartOpen] = useState(false)
+    const [cartOpen, setCartOpen] = useState(false) // Opens and closes cart
 
     // cart management
     const dispatch = useDispatch();

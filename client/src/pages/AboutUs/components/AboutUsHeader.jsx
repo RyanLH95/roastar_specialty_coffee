@@ -6,7 +6,7 @@ const AboutHeader = () => {
     <div className='header-filter'></div>
     <div className='about-us-header'>
       <img 
-        src='../../../images/image-five.png'
+        src='../../../images/coffee_beans.png'
       />
       <h1>ABOUT OUR ROASTERY</h1>
     </div>

@@ -5,15 +5,14 @@ import { addToCart } from '../../store/state';
 import { fetchProduct, fetchRelatedProducts } from '../../../../server/api/shopify/products';
 import './ProductPage.css';
 import '../../App.css';
-import { Minus, Plus } from 'lucide-react';
-
-const backBtn = '<< BACK TO SHOP'
+import { Minus, Plus, ChevronLeft } from 'lucide-react';
 
 const ProductPage = () => {
   const { handle } = useParams();
   const dispatch =  useDispatch();
+
   // State fetches and displays product from Products.jsx when clicked
-  const [productDetails, setProductDetails] = useState(null);
+  const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   // States that return whether product(s) are loading or an error
   const [loading, setLoading] = useState(true);
@@ -28,10 +27,13 @@ const ProductPage = () => {
       try {
         const data = await fetchProduct(handle);
         console.log("Fetched product data:", data);
-        setProductDetails(data);
-        if (data.variants.edges.length > 0) {
-          setSelectedVariant(data.variants.edges[0].node);
-        }
+        setProduct(data);
+        
+        /* const firstAvailableVariant = data.variants.edges.find(
+          ({ node }) => node.availableForSale
+        )?.node; 
+
+        setSelectedVariant(firstAvailableVariant || null); */
       } catch (error) {
         console.log("Error fetching product", error);
         setError("FAILED TO LOAD PRODUCT DETAILS")
@@ -50,16 +52,16 @@ const ProductPage = () => {
         setLoading(false);
       }
     };
-
+    
     getRelatedProducts();
     getProduct();
   }, [handle]);
 
   const handleVariantChange = (variantId) => {
-    const variant = productDetails.variants.edges.find(
+    const variant = product.variants.edges.find(
       ({ node }) => node.id === variantId
-    ).node;
-    setSelectedVariant(variant);
+    )?.node;
+    setSelectedVariant(variant || null);
   };
 
   // Count functions for increasing or decreasing quantity
@@ -72,25 +74,25 @@ const ProductPage = () => {
   }
 
   const handleAddToCart = () => {
-    if (selectedVariant && productDetails) {
+    if (selectedVariant && product) {
       console.log({
         id: selectedVariant.id,
-        title: productDetails.title,
+        title: product.title,
         variant: selectedVariant.title,
         price: parseFloat(selectedVariant.priceV2.amount),
         quantity: counter,
-        image: productDetails.images.edges[0]?.node.src,
-        handle: productDetails.handle, // Ensure this is logged
+        image: product.images.edges[0]?.node.src,
+        handle: product.handle, // Ensure this is logged
       });
 
       dispatch(addToCart({
         id: selectedVariant.id,
-        title: productDetails.title,
+        title: product.title,
         variant: selectedVariant.title,
         price: parseFloat(selectedVariant.priceV2.amount),
         quantity: counter,
-        image: productDetails.images.edges[0]?.node.src,
-        handle: productDetails.handle,
+        image: product.images.edges[0]?.node.src,
+        handle: product.handle,
       }));
     };
   };
@@ -99,36 +101,46 @@ const ProductPage = () => {
   // If error is made, returns this error message
   if (error) return <div className='pnf-container'><p>{error}</p></div>; 
   // If product is not found, returns this error message
-  if (!productDetails) return <div className='pnf-container'><p>PRODUCT NOT FOUND</p></div>;
+  if (!product) return <div className='pnf-container'><p>PRODUCT NOT FOUND</p></div>;
+
+  // Checks if the entire product is sold out
+  const allVariantsUnavailable = !product.variants.edges.some(
+    ({ node }) => node.availableForSale
+  );
 
   return (
     <div className='product-page-background'>
       <div className='product-page-container'>
         <Link to='/Shop' reloadDocument>
-          <h5>
-            {backBtn}
-          </h5>
+          <ChevronLeft style={{ position: 'relative', top: '0.45rem', color: 'white'}}/><h5>BACK TO SHOP</h5>
         </Link>
         <div className='product-content'>
-          <h1>{productDetails.title}</h1>
+          <h1>{product.title}</h1>
           <div className='product-main'>
             {/* PRODUCT IMAGE */}
-            {productDetails.images.edges.length > 0 && (
+            {product.images.edges.length > 0 && (
               <img 
-                src={productDetails.images.edges[0].node.src} 
-                alt={productDetails.title} 
+                src={product.images.edges[0].node.src} 
+                alt={product.title} 
                 width={600}
                 className='product-img'
               />
             )}
             <div className='product-details'>
               {/* PRODUCT DETAILS */}
-              <div className='product-desc' dangerouslySetInnerHTML={{ __html: productDetails.descriptionHtml }} />
+              <div className='product-desc' dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
               {/* PRODUCT PRICE */}
-              <h2>£{selectedVariant ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) : "0.00"}</h2>
-              {/* `${parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
+              <h2>
+                £{
+                  selectedVariant ? 
+                  parseFloat(selectedVariant.priceV2.amount).toFixed(2) : 
+                  parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)
+                }
+              </h2>
+              {product.totalInventory === 0 && <h3 style={{ color: 'white', marginTop: '1rem', letterSpacing: '1.5px'}}>SOLD OUT</h3>}
+              {/* `${parseFloat(productDetails.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
               {/* QUANTITY/AMOUNT */}
-              <div className='product-quantity'>
+              <div className={product.totalInventory === 0 ? 'product-quantity disabled' : 'product-quantity'}>
                 <button className='product-quantity-minus' onClick={handleClickMinus}>
                   <Minus size={15}/>
                 </button>
@@ -139,33 +151,42 @@ const ProductPage = () => {
               </div>
               {/* CHOICE OF TYPE(GRIND) */}
               <div className='product-coffee-grind'>
-                <select onChange={(e) => handleVariantChange(e.target.value)} name='grind'>
-                  {productDetails.variants.edges.map(({ node }) => (
-                    <option key={node.id} value={node.id}>
-                      {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
-                    </option>
+                <select 
+                  value={selectedVariant?.id || ''}
+                  onChange={(e) => handleVariantChange(e.target.value)} 
+                  name='grind'
+                  disabled={product.totalInventory === 0}
+                >
+                  <option value='' disabled>SELECT {product.options[1].name.toUpperCase()}</option>
+                  {product.variants.edges
+                    .filter(({ node }) => node.availableForSale)
+                    .map(({ node }) => (
+                      <option key={node.id} value={node.id}>
+                        {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
+                      </option>
                   ))}
                 </select>
-                {/*{selectedVariant && (
-                  <p>
-                    Selected: {selectedVariant.title} - £{selectedVariant.priceV2.amount}{' '}
-                  </p>
-                )}*/}
               </div>
               {/* ADD TO CART/CHECKOUT */}
               <button 
-                onClick={handleAddToCart}
+                onClick={() => {
+                  handleAddToCart();
+                  selectedVariant?.id || alert(`Please choose a ${product.options[1].name.toLowerCase()} option.`);
+                }}
                 className='add-to-cart'
+                disabled={product.totalInventory === 0}
               >
                 ADD TO CART
               </button>
             </div>
-         </div>
+          </div>
           {/* RELATED PRODUCTS*/}
           <h2 className='related-product-title'>RELATED PRODUCTS</h2>
           <div className='related-product-list'>
             {
-              relatedProducts.slice(0,4).map(({ node }) => (
+              relatedProducts
+              .filter(({ node }) => node.handle !== product.handle)
+              .slice(0,4).map(({ node }) => (
                 <div 
                   className='related-product-card'
                   key={node.id}

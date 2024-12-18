@@ -76,7 +76,7 @@
 .product-card .view-product {
   border: 2px solid transparent;
   border-radius: 5px;
-  height: 27em;
+  height: 27rem;
   width: 100%;
   position: absolute;
   top: -0.1em;
@@ -184,40 +184,6 @@
   font-weight: 500;
 }
 
-.product-preview-coffee-grind {
-  margin-top: 1em;
-}
-
-.product-preview-coffee-grind select {
-  background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%;
-  appearance: none;
-  cursor: pointer;
-  height: 3.3rem;
-  width: 100%;
-  letter-spacing: 1.5px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: black;
-  padding-left: 1em;
-  border: 2px solid black;
-  border-radius: 5px;
-  transition: 
-    background 300ms, 
-    border 300ms,
-    color 300ms;
-  &:before {
-    transition: 
-      background 300ms,
-      border 300ms 
-      color 300ms;
-  }
-  &:hover {
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I2ZmZmZmZjt9DQo8L3N0eWxlPg0KPHRpdGxlPmFycm93czwvdGl0bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEuNCw0LjcgMi41LDMuMiAzLjUsNC43ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4NCjwvc3ZnPg==) no-repeat 100% 50%, black;
-    border: 2px solid black;
-    color: white;
-  }
-}
-
 .product-preview-quantity {
   justify-content: center;
   color: black;
@@ -268,12 +234,63 @@
   background: rgb(22, 22, 22);
 }
 
+.preview-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .product-preview-quantity .product-preview-quantity-amount {
   position: relative;
   top: 15%;
   margin-right: 1.4em;
   margin-left: 1.4em;
   font-variant-numeric: tabular-nums;
+}
+
+.product-preview-coffee-grind {
+  margin-top: 1em;
+}
+
+.product-preview-coffee-grind select {
+  background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%;
+  appearance: none;
+  cursor: pointer;
+  height: 3.3rem;
+  width: 100%;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: black;
+  padding-left: 1em;
+  border: 2px solid black;
+  border-radius: 5px;
+  transition: 
+    background 300ms, 
+    border 300ms,
+    color 300ms;
+  &:before {
+    transition: 
+      background 300ms,
+      border 300ms 
+      color 300ms;
+  }
+  &:hover {
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I2ZmZmZmZjt9DQo8L3N0eWxlPg0KPHRpdGxlPmFycm93czwvdGl0bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEuNCw0LjcgMi41LDMuMiAzLjUsNC43ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4NCjwvc3ZnPg==) no-repeat 100% 50%, black;
+    border: 2px solid black;
+    color: white;
+  }
+}
+
+/* If product is sold out */
+.product-preview-coffee-grind select:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.product-preview-coffee-grind select:hover:disabled {
+  background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjEuNDEgNC42NyAyLjQ4IDMuMTggMy41NCA0LjY3IDEuNDEgNC42NyIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzLjU0IDUuMzMgMi40OCA2LjgyIDEuNDEgNS4zMyAzLjU0IDUuMzMiLz48L3N2Zz4=) no-repeat 100% 50%;
+  color: black;
+  opacity: 0.5;
 }
 
 .product-preview-details .product-add-to-cart {
@@ -305,6 +322,17 @@
   }
 }
 
+.product-add-to-cart:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.product-add-to-cart:hover:disabled {
+  background: none;
+  color: black;
+  opacity: 0.5;
+}
+
 .product-preview-details .product-purchase {
   letter-spacing: 1.5px;
   font-weight: 600;
@@ -334,9 +362,16 @@
   }
 }
 
-.product-purchase span {
-  position: relative;
-  top: -0.8em;
+.product-purchase:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.product-purchase:hover:disabled {
+  border: 2px solid var(--btn-green);
+  background: var(--btn-green);
+  color: white;
+  opacity: 0.7;
 }
 
 .view-details {
@@ -372,7 +407,7 @@
 
 .pro {
   display: none;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 /* Safari */

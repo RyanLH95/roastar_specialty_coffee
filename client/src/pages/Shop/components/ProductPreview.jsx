@@ -20,9 +20,6 @@ const ProductPreview = ({ handle, handleClose }) => {
         const data = await fetchProduct(handle);
         console.log("Fetched product data:", data);
         setProduct(data);
-        if (data.variants.edges.length > 0) {
-          setSelectedVariant(data.variants.edges[0].node);
-        }
       } catch (error) {
         console.log("Failed to fetch product:", error)
       }
@@ -34,8 +31,8 @@ const ProductPreview = ({ handle, handleClose }) => {
   const handleVariantChange = (variantId) => {
     const variant = product.variants.edges.find(
       ({ node }) => node.id === variantId
-    ).node;
-    setSelectedVariant(variant);
+    )?.node;
+    setSelectedVariant(variant || null);
   };
 
   // Count functions for increasing or decreasing quantity
@@ -73,6 +70,11 @@ const ProductPreview = ({ handle, handleClose }) => {
 
   if (!product) return <p>Loading...</p>;
 
+  // Checks if the entire product is sold out
+  const allVariantsUnavailable = !product.variants.edges.some(
+    ({ node }) => node.availableForSale
+  );
+
   return (
     <Backdrop>
       <motion.div
@@ -83,7 +85,9 @@ const ProductPreview = ({ handle, handleClose }) => {
         animate='visible'
         exit='exit'
       >
-        <button onClick={handleClose}><X size={35} strokeWidth={1.5} /></button>
+        <button onClick={handleClose}>
+          <X size={35} strokeWidth={1.5} />
+        </button>
         <div className='product-preview-content'>
           {/* PRODUCT TITLE */}
           <h1>{product.title}</h1>
@@ -98,38 +102,62 @@ const ProductPreview = ({ handle, handleClose }) => {
               />
             )}
             <div className='product-preview-details'>
+              {/* allVariantsUnavailable ? (<h2>SOLD OUT</h2>) : (<>CODE GOES HERE<> */}
               {/* PRODUCT PRICE */}
-              <h2 className='product-preview-price'>£{selectedVariant ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) : "0.00"}</h2>
-              {/* `${parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
+              <h2 className='product-preview-price'>
+                £{
+                  selectedVariant ? 
+                  parseFloat(selectedVariant.priceV2.amount).toFixed(2) : 
+                  parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)
+                }
+              </h2>
+              {product.totalInventory === 0 && <h3 style={{ color: 'black', marginTop: '1rem', letterSpacing: '1.5px' }}>SOLD OUT</h3>}
               {/* QUANTITY/AMOUNT */}
-              <div className='product-preview-quantity'>
+              <div className={product.totalInventory === 0 ? 'product-preview-quantity preview-disabled' : 'product-preview-quantity'}>
                 <button className='product-preview-quantity-minus' onClick={handleClickMinus}><Minus size={15}/></button>
                   <p className='product-preview-quantity-amount'>{counter}</p>
                 <button className='product-preview-quantity-plus' onClick={handleClickPlus}><Plus size={15}/></button>
               </div>
               {/* CHOICE OF TYPE(GRIND) */}
               <div className='product-preview-coffee-grind'>
-                <select onChange={(e) => handleVariantChange(e.target.value)} name='grind'>
-                  {product.variants.edges.map(({ node }) => (
-                    <option key={node.id} value={node.id}>
-                      {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
-                    </option>
-                  ))}
+                <select 
+                  value={selectedVariant?.id || ''}
+                  onChange={(e) => handleVariantChange(e.target.value)} 
+                  name='grind'
+                  disabled={product.totalInventory === 0}
+                >
+                  <option value='' disabled>SELECT {product.options[1].name.toUpperCase()}</option>
+                  {product.variants.edges
+                    .filter(({ node }) => node.availableForSale)
+                    .map(({ node }) => (
+                      <option key={node.id} value={node.id}>
+                        {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
+                      </option>
+                    ))}
                 </select>
               </div>
               {/* ADD TO CART/CHECKOUT */}
               <button 
-                onClick={handleAddToCart}
+                onClick={() => {
+                  handleAddToCart();
+                  selectedVariant?.id || alert(`Please choose a ${product.options[1].name.toLowerCase()} option.`);
+                }}
                 className='product-add-to-cart'
+                disabled={product.totalInventory === 0}
               >
                 ADD TO CART
               </button>
               <button 
                 className='product-purchase'
+                disabled={product.totalInventory === 0}
               >
-                BUY NOW
+                PURCHASE
               </button>
-              <Link className='view-details' to={`/product/${handle}`}>
+              <Link 
+                className='view-details' 
+                to={`/product/${handle}`}
+                reloadDocument
+              >
                 VIEW DETAILS
               </Link>
             </div>

@@ -10,6 +10,7 @@ const Products = ({ addToCart }) => {
   const [loading, setLoading] = useState(true);
   // State for popup/preview of product
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [inventory, setInventory] = useState(null)
 
   // handles for opening and closing preview of product
   const handleOpenModal = (handle) => setSelectedProduct(handle);
@@ -34,7 +35,7 @@ const Products = ({ addToCart }) => {
   }, []);
 
   if (loading) return <Loader />
-  
+
   return (
     <div className="product-container">
       <div className='product-grid'>
@@ -70,8 +71,9 @@ const Products = ({ addToCart }) => {
                   PRODUCT PREVIEW
                 </button>
               </div>
-            </Link>
-            <p>£{`${parseFloat(node.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</p>
+              <p>£{`${parseFloat(node.variants.edges[0].node.priceV2.amount).toFixed(2)}`}</p>
+            {/* Renders "SOLD OUT" label if totalInventory is 0 */}
+            {node.totalInventory === 0 && <p>SOLD OUT</p>}
             {/* PREVIEW BUTTON OF PRODUCT FOR TABLET/MOBILE ONLY */}
             <button 
               onClick={(e) => {
@@ -83,6 +85,7 @@ const Products = ({ addToCart }) => {
             >
               PRODUCT PREVIEW
             </button>
+            </Link>
           </div>
         ))
       }

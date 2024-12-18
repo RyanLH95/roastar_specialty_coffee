@@ -32,7 +32,7 @@ const AboutUsContent = () => {
             </div>
             <div className='about-image-two'>
               <img 
-                src='../../../../images/delivery_link_image.png'
+                src='../../../../images/roastar_aboutus_image.png'
                 width={400}
                 height={400}
               />

@@ -68,30 +68,29 @@ const Cart = ({ handleClose }) => {
                   <div className='cart-item-container'>
                     {cart.map((item) => (
                       <div className='cart-item' key={item.id}>
-                        <div className='cart-details' >
-                          <Link to={`/product/${item.handle}`} className='cart-image-link' reloadDocument>
-                            <img src={item.image} alt={item.title} width={100}/>
+                        <div className='cart-details'>
+                          <img src={item.image} alt={item.title} width={100}/>
+                        </div>
+                        <div className='cart-title-and-quantity'>
+                          <Link to={`/product/${item.handle}`} style={{ textDecoration: 'none', color: 'black' }} reloadDocument>
+                            <h5 className='cart-title'>{item.title}</h5>
                           </Link>
-                          <div className='cart-details-two'>
-                            <div className='cart-title-and-price'>
-                              <Link to={`/product/${item.handle}`} style={{textDecoration: 'none', color: 'black'}} reloadDocument>
-                                <h5 className='cart-title'>{item.title}</h5>
-                              </Link>
-                              <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
+                          <div className='cart-quantity-and-variant'>
+                            <div className='cart-quantity-handle'>
+                              <button onClick={() => handleQuantityChange(item.id, 'decrement')} className='cart-button-minus'>
+                                <Minus size={10}/>
+                              </button>
+                                <p className='cart-quantity'>{item.quantity}</p>
+                              <button onClick={() => handleQuantityChange(item.id, 'increment')} className='cart-button-plus'>
+                                <Plus size={10}/>
+                              </button>
                             </div>
-                            {/*<p>£{item.price.toFixed(2)}</p>*/}
-                            <div className='cart-details-three'>
-                              <div className='cart-d'>
-                                <div className='cart-quantity-handle'>
-                                  <button onClick={() => handleQuantityChange(item.id, 'decrement')} className='cart-button-minus'><Minus size={10}/></button>
-                                    <p className='cart-quantity'>{item.quantity}</p>
-                                  <button onClick={() => handleQuantityChange(item.id, 'increment')} className='cart-button-plus'><Plus size={10}/></button>
-                                </div>
-                                <h5 className='cart-variant'>{item.variant.toUpperCase()}</h5>
-                              </div>
-                              <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
-                            </div>
+                            <h5 className='cart-variant'>{item.variant.toUpperCase()}</h5>
                           </div>
+                        </div>
+                        <div className='cart-price-and-delete'>
+                          <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
+                          <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
                         </div>
                       </div>
                     ))}
@@ -115,3 +114,34 @@ const Cart = ({ handleClose }) => {
 }
 
 export default Cart
+
+/*
+<div className='cart-item' key={item.id}>
+                        <div className='cart-details' >
+                          <Link to={`/product/${item.handle}`} className='cart-image-link' reloadDocument>
+                            <img src={item.image} alt={item.title} width={100}/>
+                          </Link>
+                          <div className='cart-details-two'>
+                            <div className='cart-title-and-price'>
+                              <Link to={`/product/${item.handle}`} style={{ textDecoration: 'none', color: 'black' }} reloadDocument>
+                                <h5 className='cart-title'>{item.title}</h5>
+                              </Link>
+                              <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
+                            </div>
+                    
+                            <div className='cart-details-three'>
+                              <div className='cart-d'>
+                                <div className='cart-quantity-handle'>
+                                  <button onClick={() => handleQuantityChange(item.id, 'decrement')} className='cart-button-minus'><Minus size={10}/></button>
+                                    <p className='cart-quantity'>{item.quantity}</p>
+                                  <button onClick={() => handleQuantityChange(item.id, 'increment')} className='cart-button-plus'><Plus size={10}/></button>
+                                </div>
+                                <h5 className='cart-variant'>{item.variant.toUpperCase()}</h5>
+                              </div>
+                              <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+*/
