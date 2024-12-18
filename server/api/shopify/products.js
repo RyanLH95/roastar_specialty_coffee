@@ -18,6 +18,7 @@ export const fetchProducts = async () => {
                 id
                 title
                 handle
+                totalInventory
                 descriptionHtml
                 images(first: 1) {
                   edges {
@@ -64,7 +65,13 @@ export const fetchProduct = async (handle) => {
           productByHandle(handle: "${handle}") {
             id
             title
+            options {
+              name
+              values
+            }
             handle
+            totalInventory
+            productType
             descriptionHtml
             images(first: 1) {
               edges {
@@ -78,6 +85,7 @@ export const fetchProduct = async (handle) => {
                 node {
                   id
                   title
+                  availableForSale
                   priceV2 {
                     amount
                     currencyCode
@@ -112,6 +120,7 @@ export const fetchRelatedProducts = async () => {
                 id
                 title
                 handle
+                totalInventory
                 descriptionHtml
                 images(first: 1) {
                   edges {
