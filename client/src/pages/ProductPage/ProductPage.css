@@ -65,6 +65,7 @@
 }
 
 .product-details h2 {
+  font-variant-numeric: tabular-nums;
   letter-spacing: 1.5px;
   margin-top: 1em;
   color: white;
@@ -176,7 +177,7 @@
   cursor: pointer;
   color: white;
   margin-top: 3em;
-  width: 100%;
+  width: 35vw;
   padding: 1rem;
   border-radius: 5px;
   border: 2px solid white;
@@ -218,6 +219,7 @@
   background: none;
 }
 
+/* Related products section */
 .product-content .related-product-title {
   letter-spacing: 1.5px;
   color: white;
@@ -344,12 +346,22 @@
 
   .product-details {
     margin: 0;
+    text-align: justify;
   }
+
+  .product-details h2 {
+    text-align: center;
+  }
+  
 
   .product-quantity {
     justify-content: center;
     margin: 2em auto;
     width: 179px;
+  }
+
+  .add-to-cart {
+    width: 100%;
   }
 
   .related-product-list {

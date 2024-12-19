@@ -9,7 +9,7 @@ import { Minus, Plus, ChevronLeft } from 'lucide-react';
 
 const ProductPage = () => {
   const { handle } = useParams();
-  const dispatch =  useDispatch();
+  const dispatch = useDispatch();
 
   // State fetches and displays product from Products.jsx when clicked
   const [product, setProduct] = useState(null);
@@ -97,11 +97,11 @@ const ProductPage = () => {
     };
   };
 
-  if (loading) return <p className='pnf-container'>Loading product details...</p>;
+  if (loading) return <div className='pnf-container'/>;
   // If error is made, returns this error message
   if (error) return <div className='pnf-container'><p>{error}</p></div>; 
   // If product is not found, returns this error message
-  if (!product) return <div className='pnf-container'><p>PRODUCT NOT FOUND</p></div>;
+  if (!product) return <div className='pnf-container'></div>;
 
   // Checks if the entire product is sold out
   const allVariantsUnavailable = !product.variants.edges.some(
@@ -132,10 +132,10 @@ const ProductPage = () => {
               {/* PRODUCT PRICE */}
               <h2>
                 £{
-                  selectedVariant ? 
-                  parseFloat(selectedVariant.priceV2.amount).toFixed(2) : 
-                  parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)
-                }
+                   selectedVariant ? 
+                   parseFloat(selectedVariant.priceV2.amount).toFixed(2) : 
+                   parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)
+                 }
               </h2>
               {product.totalInventory === 0 && <h3 style={{ color: 'white', marginTop: '1rem', letterSpacing: '1.5px'}}>SOLD OUT</h3>}
               {/* `${parseFloat(productDetails.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
