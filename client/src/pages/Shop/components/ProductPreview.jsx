@@ -12,6 +12,7 @@ const ProductPreview = ({ handle, handleClose }) => {
   const dispatch =  useDispatch();
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState({})
   const [counter, setCounter] = useState(1);
 
   useEffect(() => {
@@ -20,6 +21,11 @@ const ProductPreview = ({ handle, handleClose }) => {
         const data = await fetchProduct(handle);
         console.log("Fetched product data:", data);
         setProduct(data);
+        // Automatically select the first available variant
+        const firstAvailableVariant = data.variants.edges.find(
+          ({ node }) => node.availableForSale
+        )?.node;
+        setSelectedVariant(firstAvailableVariant || null);
       } catch (error) {
         console.log("Failed to fetch product:", error)
       }
@@ -28,11 +34,36 @@ const ProductPreview = ({ handle, handleClose }) => {
     getProduct();
   }, [handle])
 
-  const handleVariantChange = (variantId) => {
-    const variant = product.variants.edges.find(
-      ({ node }) => node.id === variantId
-    )?.node;
-    setSelectedVariant(variant || null);
+  // Handle the variants/options avaivalbility  
+  const handleVariantChange = (option, value) => {
+    const updatedOptions = { ...selectedOptions, [option]: value };
+    setSelectedOptions(updatedOptions);
+    // Find a matching variant based on the updated selected options
+    const matchingVariant = product.variants.edges.find(({ node }) => 
+      node.availableForSale &&
+      node.selectedOptions.every(
+        (({ name, value }) => updatedOptions[name] === value)
+      )
+    );
+    setSelectedVariant(matchingVariant ? matchingVariant.node : null)
+  }
+
+  const getAvailableOptions = (currentOptionName) => {
+    if (!product || !product.variants) return [];
+
+    // filter variants matching the currently selected options (excluding the current option)
+    const validVariants = product.variants.edges.filter(({ node }) => 
+      node.availableForSale &&
+      node.selectedOptions.every(({ name, value }) => 
+        name === currentOptionName || !selectedOptions[name] || selectedOptions[name] === value
+      )
+    );
+
+    const availableValues = validVariants.map(({ node }) =>
+      node.selectedOptions.find(({ name }) => name === currentOptionName)?.value
+    );
+    // Extract unique values for the specified option name
+    return [...new Set(availableValues)];
   };
 
   // Count functions for increasing or decreasing quantity
@@ -45,6 +76,19 @@ const ProductPreview = ({ handle, handleClose }) => {
   }
 
   const handleAddToCart = () => {
+    const unselectedOption = product.options.find(
+      (option) => !selectedOptions[option.name]
+    );
+    if (unselectedOption) {
+      alert(`Please choose a ${unselectedOption.name.toLowerCase()} option`);
+      return
+    }
+    // Ensure selectVariant matches the current selection
+    if (!selectedVariant) {
+      alert("The selected variant is unavailable. Please choose a valid option");
+      return // Stop execution if no valid variant is selected
+    }
+
     if (selectedVariant && product) {
       console.log({
         id: selectedVariant.id,
@@ -68,12 +112,7 @@ const ProductPreview = ({ handle, handleClose }) => {
     }
   };
 
-  if (!product) return <p>Loading...</p>;
-
-  // Checks if the entire product is sold out
-  const allVariantsUnavailable = !product.variants.edges.some(
-    ({ node }) => node.availableForSale
-  );
+  if (!product) return <p></p>;
 
   return (
     <Backdrop>
@@ -105,43 +144,60 @@ const ProductPreview = ({ handle, handleClose }) => {
               {/* allVariantsUnavailable ? (<h2>SOLD OUT</h2>) : (<>CODE GOES HERE<> */}
               {/* PRODUCT PRICE */}
               <h2 className='product-preview-price'>
-                £{
-                  selectedVariant ? 
+                £{selectedVariant && selectedOptions ? 
                   parseFloat(selectedVariant.priceV2.amount).toFixed(2) : 
-                  parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)
-                }
+                  parseFloat(product.variants.edges[0].node.priceV2.amount || 0).toFixed(2)
+                 }
               </h2>
-              {product.totalInventory === 0 && <h3 style={{ color: 'black', marginTop: '1rem', letterSpacing: '1.5px' }}>SOLD OUT</h3>}
+              {product.totalInventory === 0 && <h3 style={{ color: 'black', letterSpacing: '1.5px' }}>SOLD OUT</h3>}
               {/* QUANTITY/AMOUNT */}
               <div className={product.totalInventory === 0 ? 'product-preview-quantity preview-disabled' : 'product-preview-quantity'}>
                 <button className='product-preview-quantity-minus' onClick={handleClickMinus}><Minus size={15}/></button>
                   <p className='product-preview-quantity-amount'>{counter}</p>
                 <button className='product-preview-quantity-plus' onClick={handleClickPlus}><Plus size={15}/></button>
               </div>
-              {/* CHOICE OF TYPE(GRIND) */}
-              <div className='product-preview-coffee-grind'>
-                <select 
-                  value={selectedVariant?.id || ''}
-                  onChange={(e) => handleVariantChange(e.target.value)} 
-                  name='grind'
-                  disabled={product.totalInventory === 0}
-                >
-                  <option value='' disabled>SELECT {product.options[1].name.toUpperCase()}</option>
-                  {product.variants.edges
-                    .filter(({ node }) => node.availableForSale)
-                    .map(({ node }) => (
-                      <option key={node.id} value={node.id}>
-                        {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
+              {/* CHOICE OF VARIANT/OPTION */}
+              <div className={`product-preview-coffee-grind ${
+                product.options.length === 1 ? 'preview-single-product' : ''
+                }`}
+              >
+                {product.options.map((option, index) => (
+                  <div key={index} className={`preview-variant-dropdown ${
+                    product.options.length === 1
+                      ? 'preview-variant-full-width'
+                      : index === 2
+                      ? 'preview-variant-full-width'
+                      : 'preview-variant-half-width'
+                    }`}
+                  >
+                    <select
+                      id={`variant-option-${index}`}
+                      value={selectedOptions[option.name] || ''}
+                      name='option'
+                      onChange={(e) => handleVariantChange(option.name, e.target.value)}
+                      disabled={product.totalInventory === 0}
+                    >
+                      <option value='' disabled>
+                        SELECT {option.name.toUpperCase()}
                       </option>
-                    ))}
-                </select>
+                      {option.values.map((value) =>{
+                        // Checks to see if value is available
+                        const isAvailable = getAvailableOptions(option.name).includes(value);
+                        return (
+                          <option key={value} value={value} disabled={!isAvailable}>
+                            {value.toUpperCase()}
+                          </option>
+                        );
+                      })};
+                    </select>
+                  </div>
+                ))
+
+                }
               </div>
               {/* ADD TO CART/CHECKOUT */}
               <button 
-                onClick={() => {
-                  handleAddToCart();
-                  selectedVariant?.id || alert(`Please choose a ${product.options[1].name.toLowerCase()} option.`);
-                }}
+                onClick={handleAddToCart}
                 className='product-add-to-cart'
                 disabled={product.totalInventory === 0}
               >

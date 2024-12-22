@@ -67,16 +67,20 @@
 .product-details h2 {
   font-variant-numeric: tabular-nums;
   letter-spacing: 1.5px;
-  margin-top: 1em;
+  margin-top: 1rem;
   color: white;
   font-weight: 600;
+}
+
+.product-details h3 {
+  margin-top: 1.5rem;
 }
 
 .product-quantity {
   justify-content: center;
   color: white;
   border-radius: 5px;
-  margin-top: 2em;
+  margin-top: 1.5rem;
   display: flex;
   gap: 0px;
   background: none;
@@ -122,9 +126,26 @@
 }
 
 .product-coffee-grind {
-  margin-top: 2.5em;
-  display: flex;
-  gap: 10px;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.product-coffee-grind .single-variant {
+  grid-template-columns: 1fr;
+}
+
+.variant-dropdown {
+  width: 100%;
+}
+
+.variant-full-width {
+  grid-column: span 2;
+}
+
+.variant-half-width {
+  grid-column: span 1;
 }
 
 .product-coffee-grind select {
@@ -158,6 +179,16 @@
   }
 }
 
+.product-coffee-grind select:first-child {
+  grid-column: span 2;
+  width: 100%;
+}
+
+.product-coffee-grind select:nth-child(3) {
+  grid-column: span 2;
+  width: 100%;
+}
+
 /* If product is sold out */
 .product-coffee-grind select:disabled {
   cursor: default;
@@ -170,13 +201,14 @@
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I2ZmZmZmZjt9DQo8L3N0eWxlPg0KPHRpdGxlPmFycm93czwvdGl0bGU+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjEuNCw0LjcgMi41LDMuMiAzLjUsNC43ICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4NCjwvc3ZnPg==) no-repeat 100% 50%;
 }
 
+
 .add-to-cart {
   letter-spacing: 1.5px;
   font-weight: 600;
   font-size: 0.8rem;
   cursor: pointer;
   color: white;
-  margin-top: 3em;
+  margin-top: 1rem;
   width: 35vw;
   padding: 1rem;
   border-radius: 5px;
@@ -353,11 +385,19 @@
     text-align: center;
   }
   
+  .product-details h3 {
+    margin-top: 0rem;
+    text-align: center;
+  }
 
   .product-quantity {
     justify-content: center;
-    margin: 2em auto;
+    margin: 2rem auto;
     width: 179px;
+  }
+
+  .product-coffee-grind select {
+    margin-top: -0.5rem;
   }
 
   .add-to-cart {

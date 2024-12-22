@@ -21,6 +21,7 @@ const ProductPage = () => {
   const [selectedVariant, setSelectedVariant] = useState(null);
   // State for increasing and decresing quantity
   const [counter, setCounter] = useState(1);
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
     const getProduct = async () => {
@@ -28,12 +29,11 @@ const ProductPage = () => {
         const data = await fetchProduct(handle);
         console.log("Fetched product data:", data);
         setProduct(data);
-        
-        /* const firstAvailableVariant = data.variants.edges.find(
+        // Automatically select the first available variant
+        const firstAvailableVariant = data.variants.edges.find(
           ({ node }) => node.availableForSale
-        )?.node; 
-
-        setSelectedVariant(firstAvailableVariant || null); */
+        )?.node;
+        setSelectedVariant(firstAvailableVariant || null);
       } catch (error) {
         console.log("Error fetching product", error);
         setError("FAILED TO LOAD PRODUCT DETAILS")
@@ -57,11 +57,35 @@ const ProductPage = () => {
     getProduct();
   }, [handle]);
 
-  const handleVariantChange = (variantId) => {
-    const variant = product.variants.edges.find(
-      ({ node }) => node.id === variantId
-    )?.node;
-    setSelectedVariant(variant || null);
+  const handleVariantChange = (option, value) => {
+    const updatedOptions = { ...selectedOptions, [option]: value };
+    setSelectedOptions(updatedOptions);
+    // Finds a matching variant based on the updated selected options
+    const matchingVariant = product.variants.edges.find(({ node }) => 
+      node.availableForSale &&
+      node.selectedOptions.every(
+        (({ name, value }) => updatedOptions[name] === value)
+      )
+    );
+    setSelectedVariant(matchingVariant ? matchingVariant.node : null)
+  };
+
+  const getAvailableOptions = (currentOptionName) => {
+    if (!product || !product.variants) return [];
+
+    // filter variants matching the currently selected options (excluding current option)
+    const validVariants = product.variants.edges.filter(({ node }) =>
+      node.availableForSale &&
+      node.selectedOptions.every(({ name, value }) => 
+        name === currentOptionName || !selectedOptions[name] || selectedOptions[name] === value
+      )
+    );
+
+    const availableValues = validVariants.map(({ node }) => 
+      node.selectedOptions.find(({ name }) => name === currentOptionName)?.value
+    )
+    // Extract unique values for the specified option name
+    return [...new Set(availableValues)];
   };
 
   // Count functions for increasing or decreasing quantity
@@ -74,6 +98,19 @@ const ProductPage = () => {
   }
 
   const handleAddToCart = () => {
+    const unselectedOption = product.options.find(
+      (option) => !selectedOptions[option.name]
+    );
+    if (unselectedOption) {
+      alert(`Please choose a ${unselectedOption.name.toLowerCase()} option`);
+      return
+    }
+    // Ensure selectedVariant matches the current selections
+    if (!selectedVariant) {
+      alert("The selected variant is unavailable. Please choose valid options.");
+      return // Stop execution if no valid variant is selected
+    }
+    
     if (selectedVariant && product) {
       console.log({
         id: selectedVariant.id,
@@ -103,11 +140,6 @@ const ProductPage = () => {
   // If product is not found, returns this error message
   if (!product) return <div className='pnf-container'></div>;
 
-  // Checks if the entire product is sold out
-  const allVariantsUnavailable = !product.variants.edges.some(
-    ({ node }) => node.availableForSale
-  );
-
   return (
     <div className='product-page-background'>
       <div className='product-page-container'>
@@ -132,12 +164,12 @@ const ProductPage = () => {
               {/* PRODUCT PRICE */}
               <h2>
                 £{
-                   selectedVariant ? 
+                   selectedVariant && selectedOptions ? 
                    parseFloat(selectedVariant.priceV2.amount).toFixed(2) : 
-                   parseFloat(product.variants.edges[0].node.priceV2.amount).toFixed(2)
+                   parseFloat(product.variants.edges[0].node.priceV2.amount || 0).toFixed(2)
                  }
               </h2>
-              {product.totalInventory === 0 && <h3 style={{ color: 'white', marginTop: '1rem', letterSpacing: '1.5px'}}>SOLD OUT</h3>}
+              {product.totalInventory === 0 && <h3 style={{ color: 'white', letterSpacing: '1.5px'}}>SOLD OUT</h3>}
               {/* `${parseFloat(productDetails.variants.edges[0].node.priceV2.amount).toFixed(2)}`*/}
               {/* QUANTITY/AMOUNT */}
               <div className={product.totalInventory === 0 ? 'product-quantity disabled' : 'product-quantity'}>
@@ -150,29 +182,45 @@ const ProductPage = () => {
                 </button>
               </div>
               {/* CHOICE OF TYPE(GRIND) */}
-              <div className='product-coffee-grind'>
-                <select 
-                  value={selectedVariant?.id || ''}
-                  onChange={(e) => handleVariantChange(e.target.value)} 
-                  name='grind'
-                  disabled={product.totalInventory === 0}
-                >
-                  <option value='' disabled>SELECT {product.options[1].name.toUpperCase()}</option>
-                  {product.variants.edges
-                    .filter(({ node }) => node.availableForSale)
-                    .map(({ node }) => (
-                      <option key={node.id} value={node.id}>
-                        {node.title.toUpperCase()} {/*£{`${parseFloat(node.priceV2.amount).toFixed(2)}`}*/}
+              <div className={`product-coffee-grind ${
+                product.options.length === 1 ? 'single-product' : ''
+                }`}
+              >
+                {product.options.map((option, index) => (
+                  <div key={index} className={`variant-dropdown ${
+                    product.options.length === 1 
+                      ? 'variant-full-width' 
+                      : index === 2
+                      ? 'variant-full-width' 
+                      : 'variant-half-width'
+                    }`}
+                  >
+                    <select
+                      id={`variant-option-${index}`}
+                      value={selectedOptions[option.name] || ''}
+                      name='option'
+                      onChange={(e) => handleVariantChange(option.name, e.target.value)}
+                      disabled={product.totalInventory === 0}
+                    >
+                      <option value='' disabled>
+                        SELECT {option.name.toUpperCase()}
                       </option>
-                  ))}
-                </select>
+                      {option.values.map((value) => {
+                        // Check if this value is available
+                        const isAvailable = getAvailableOptions(option.name).includes(value);
+                        return (
+                          <option key={value} value={value} disabled={!isAvailable}>
+                            {value.toUpperCase()}
+                          </option>
+                        );
+                      })};
+                    </select>
+                  </div>
+                ))}
               </div>
               {/* ADD TO CART/CHECKOUT */}
               <button 
-                onClick={() => {
-                  handleAddToCart();
-                  selectedVariant?.id || alert(`Please choose a ${product.options[1].name.toLowerCase()} option.`);
-                }}
+                onClick={handleAddToCart}
                 className='add-to-cart'
                 disabled={product.totalInventory === 0}
               >
@@ -181,7 +229,7 @@ const ProductPage = () => {
             </div>
           </div>
           {/* RELATED PRODUCTS*/}
-          <h2 className='related-product-title'>RELATED PRODUCTS</h2>
+          <h2 className='related-product-title'>OTHER PRODUCTS</h2>
           <div className='related-product-list'>
             {
               relatedProducts

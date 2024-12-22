@@ -6,6 +6,7 @@ import Loader from '../pages/Shop/components/Loader';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 const CartSlider = () => {
   const [products, setProducts] = useState([]);
