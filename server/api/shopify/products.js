@@ -85,6 +85,10 @@ export const fetchProduct = async (handle) => {
                 node {
                   id
                   title
+                  selectedOptions {
+                    name
+                    value
+                  }
                   availableForSale
                   priceV2 {
                     amount
