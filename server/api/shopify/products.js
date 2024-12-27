@@ -62,7 +62,7 @@ export const fetchProduct = async (handle) => {
       variables: { handle },
       query: `
         query {
-          productByHandle(handle: "${handle}") {
+          product(handle: "${handle}") {
             id
             title
             options {
@@ -104,7 +104,7 @@ export const fetchProduct = async (handle) => {
   });
 
   const { data } = await response.json();
-  return data.productByHandle;
+  return data.product;
 };
 
 export const fetchRelatedProducts = async () => {
