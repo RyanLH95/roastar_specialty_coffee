@@ -7,13 +7,42 @@ import Backdrop from '../assets/popups/cart/Backdrop'
 import { Minus, Plus, X } from 'lucide-react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { cartAnimate } from '../assets/popups/cart/animation'
+import { createCart } from '../../../server/api/shopify/checkout'
 import CartSlider from './CartSlider'
 
 const Cart = ({ handleClose }) => {
   // Cart state and dispatch() here
   const cart = useSelector((state) => state.cart);
-  console.log(cart)
+  console.log("Cart state from Redux:", cart);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+
+  console.log("Cart state after adding:", JSON.stringify(cart, null, 2));
+
+  const handleCheckout = async () => {
+    setLoading(true)
+    try {
+      const lineItems = cart.map((item) => ({
+        merchandiseId: item.id,
+        quantity: item.quantity
+      }));
+      console.log("Line items sent to Shopify:", lineItems);
+
+      const checkoutUrl = await createCart(lineItems);
+
+      if (checkoutUrl) {
+        console.log("redirecting to checkout URL", checkoutUrl)
+        window.location.href = checkoutUrl;
+      } else {
+        console.error("Failed to create checkout, no checkout URL.");
+        alert("Failed to create checkout. Please try again");
+      }
+    } catch(error) {
+      console.error("Checkout error:", error);
+    } finally {
+      setLoading(false)
+    }
+  };
 
   // Removes product from cart
   const handleRemove = (id) => {
@@ -34,7 +63,7 @@ const Cart = ({ handleClose }) => {
   }
 
   const subtotal = cart.reduce((total, item) => total + item.quantity * item.price, 0);
-
+    
   return (
     <>
       {/* BACKDROP AND CART DISPLAY/ANIMATION */}
@@ -103,7 +132,12 @@ const Cart = ({ handleClose }) => {
                   <div className='cart-bottom-section'>
                     <p className='tax-and-shipping'>Tax and shipping is calculated at checkout</p>
                     <p className='cart-subtotal'>SUBTOTAL<span>£{subtotal.toFixed(2)} GBP</span></p>
-                    <button className='checkout'>CHECKOUT</button>
+                    <button 
+                      onClick={handleCheckout}
+                      className='checkout'
+                    >
+                      {loading ? 'CHECKOUT' : 'Processing...'}
+                    </button>
                     <Link to='/Shop'><button className='continue'>CONTINUE SHOPPING</button></Link>
                   </div>
                 </>
@@ -117,28 +151,3 @@ const Cart = ({ handleClose }) => {
 }
 
 export default Cart
-
-/*
-
-                        <div className='cart-title-and-quantity'>
-                          <Link to={`/product/${item.handle}`} style={{ textDecoration: 'none', color: 'black' }} reloadDocument>
-                            <h5 className='cart-title'>{item.title}</h5>
-                          </Link>
-                          <div className='cart-quantity-and-variant'>
-                            <div className='cart-quantity-handle'>
-                              <button onClick={() => handleQuantityChange(item.id, 'decrement')} className='cart-button-minus'>
-                                <Minus size={10}/>
-                              </button>
-                                <p className='cart-quantity'>{item.quantity}</p>
-                              <button onClick={() => handleQuantityChange(item.id, 'increment')} className='cart-button-plus'>
-                                <Plus size={10}/>
-                              </button>
-                            </div>
-                            <h5 className='cart-variant'>{item.variant.toUpperCase()}</h5>
-                          </div>
-                        </div>
-                        <div className='cart-price-and-delete'>
-                          <h5 className='cart-price'>£{(item.quantity * item.price).toFixed(2)}</h5>
-                          <button className='cart-delete' onClick={() => handleRemove(item.id)}><DeleteIcon /></button>
-                        </div>
-*/

@@ -28,7 +28,6 @@ const Navbar = () => {
     const [cartOpen, setCartOpen] = useState(false) // Opens and closes cart
 
     // cart management
-    const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart)
 
     const close = () => setCartOpen(false);
@@ -80,17 +79,26 @@ const Navbar = () => {
         <Logo />
         <MobileNav />
         <div className='item-container'>
-          <ul className={`nav-list ${colour ? 'nav-list-beige nav-list-green' : 'nav-list-beige'}`}>
+          <ul className={`nav-list ${colour ? 'nav-list-beige nav-list-black' : 'nav-list-beige'}`}>
             {
               navigation.map((item) => (
                 <NavLink 
                   reloadDocument
                   to={item?.href} 
-                  key={item._id} 
+                  key={item._id}
+                  className={({ isActive }) => 
+                    `${isActive && colour ? 'active-green' : 'active-white'}`
+                  }
                 >
-                  <li className={`mobile ${active === item?.href ? 'nav-list-green active' : 'nav-list-green'}`}> 
+                  <li className={`mobile ${
+                    active === item?.href 
+                      ? colour 
+                        ? 'nav-list-black active-white active-green' 
+                        : 'nav-list-black active-white'
+                      : 'nav-list-black'
+                    }`}
+                  > 
                     {item?.title}
-                    <span className={`${active === item?.href ? 'nav-list-green active' : 'nav-list-green'}`}/>
                   </li>
                 </NavLink>
               ))

@@ -225,6 +225,7 @@
   width: 60px;
   cursor: pointer;
   border: none;
+  margin-left: 3.5rem;
   border-top-right-radius: 3px;
   padding: 16px;
   transition: 
@@ -251,8 +252,8 @@
 }
 
 .product-preview-quantity .product-preview-quantity-amount {
-  position: relative;
-  top: 0.4rem;
+  position: absolute;
+  margin-top: 0.4rem;
   margin-right: 1.4em;
   margin-left: 1.4em;
   font-variant-numeric: tabular-nums;
@@ -448,7 +449,7 @@
 
   .product-preview-main {
     padding: 1em;
-    height: 56em;
+    height: 65rem;
     margin-bottom: 40vw;
     width: 100%;
   }

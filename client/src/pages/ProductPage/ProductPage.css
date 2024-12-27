@@ -10,7 +10,7 @@
 /* If product not found */
 .pnf-container {
   background: var(--main-green);
-  height: 45rem;
+  height: 90rem;
 }
 
 .pnf-container {
@@ -23,6 +23,7 @@
   font-size: 3em;
   letter-spacing: 1.5px;
   font-weight: 500;
+  letter-spacing: 2px;
 }
 
 .product-page-container h5 {
@@ -231,14 +232,6 @@
   }
 }
 
-.variant-two {
-  width: 100%;
-}
-
-.no-variant {
-  display: none;
-}
-
 /* If product is sold out */
 .add-to-cart:disabled {
   cursor: default;
@@ -386,7 +379,7 @@
   }
   
   .product-details h3 {
-    margin-top: 0rem;
+    margin-top: 1rem;
     text-align: center;
   }
 

@@ -19,7 +19,7 @@ const CartSlider = () => {
         console.log(data); // Check the data structure here
         setProducts(data)
       } catch (error) {
-        console.error("Error fetching producs", error);
+        console.error("Error fetching products", error);
       } finally {
         setLoading(false);
       }
@@ -45,7 +45,7 @@ const CartSlider = () => {
             className='cart-track' 
             style={{ textAlign: 'center'}}
           >
-            <Link to={`/product/${node.handle}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <Link to={`/product/${node.handle}`} reloadDocument style={{ textDecoration: 'none', color: 'black' }}>
               {node.images.edges.length > 0 && (
                 <img 
                   src={node.images.edges[0].node.src}

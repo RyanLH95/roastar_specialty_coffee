@@ -36,7 +36,7 @@ const ProductPage = () => {
         setSelectedVariant(firstAvailableVariant || null);
       } catch (error) {
         console.log("Error fetching product", error);
-        setError("FAILED TO LOAD PRODUCT DETAILS")
+        setError(`Sorry, Something went wrong!`)
       } finally {
         setLoading(false);
       }
@@ -183,7 +183,7 @@ const ProductPage = () => {
               </div>
               {/* CHOICE OF TYPE(GRIND) */}
               <div className={`product-coffee-grind ${
-                product.options.length === 1 ? 'single-product' : ''
+                product.options.length === 1 ? 'single-variant' : ''
                 }`}
               >
                 {product.options.map((option, index) => (

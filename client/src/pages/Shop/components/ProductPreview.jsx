@@ -1,19 +1,22 @@
 import React, { useState, useEffect} from 'react'
 import { Link} from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
 import { previewAnimate } from '../../../assets/popups/product_preview/animation'
 import { addToCart } from '../../../store/state'
 import Backdrop from '../../../assets/popups/product_preview/Backdrop'
 import { Plus, Minus, X } from 'lucide-react'
 import { fetchProduct } from '../../../../../server/api/shopify/products'
+import { createCart } from '../../../../../server/api/shopify/checkout'
 
 const ProductPreview = ({ handle, handleClose }) => {
+  const cart = useSelector((state) => state.cart);
   const dispatch =  useDispatch();
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({})
   const [counter, setCounter] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -33,6 +36,34 @@ const ProductPreview = ({ handle, handleClose }) => {
     
     getProduct();
   }, [handle])
+
+  const handleCheckout = async () => {
+    if (!selectedVariant) {
+      alert("Please select variants before proceeding to checkout.")
+    }
+    setLoading(true);
+    try {
+      const lineItems = [
+        {
+          merchandiseId: selectedVariant.id,
+          quantity: counter,
+        }
+      ]
+
+      const checkout = await createCart(lineItems);
+
+      if (checkout) {
+        console.log("redirecting to checkout URL", checkout)
+        window.location.href = checkout
+      } else {
+        console.error("Failed to create checkout, no checkout URl")
+      } alert("Failed to create checkout. Please try again")
+    } catch (error) {
+      console.error("Checkout Error:", error);
+    } finally {
+      setLoading(false);
+    };
+  };
 
   // Handle the variants/options avaivalbility  
   const handleVariantChange = (option, value) => {
@@ -158,7 +189,7 @@ const ProductPreview = ({ handle, handleClose }) => {
               </div>
               {/* CHOICE OF VARIANT/OPTION */}
               <div className={`product-preview-coffee-grind ${
-                product.options.length === 1 ? 'preview-single-product' : ''
+                product.options.length === 1 ? 'preview-single-variant' : ''
                 }`}
               >
                 {product.options.map((option, index) => (
@@ -204,10 +235,11 @@ const ProductPreview = ({ handle, handleClose }) => {
                 ADD TO CART
               </button>
               <button 
+                onClick={handleCheckout}
                 className='product-purchase'
                 disabled={product.totalInventory === 0}
               >
-                PURCHASE
+                CHECKOUT
               </button>
               <Link 
                 className='view-details' 

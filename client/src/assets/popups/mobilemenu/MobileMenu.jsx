@@ -57,7 +57,6 @@ const MobileMenu = ({ handleClose }) => {
               >
                 <li className={`${active === item?.href ? 'nav-list-green active' : 'nav-list-green'}`}> 
                   {item?.title}
-                  <span className={`${active === item?.href ? 'nav-list-green active' : 'nav-list-green'}`}/>
                 </li>
               </NavLink>
             ))

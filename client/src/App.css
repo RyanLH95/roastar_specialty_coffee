@@ -161,7 +161,8 @@ body {
 /* this will transform all of the hamburger slices into a crossmark */
 .nav-list-mobile input:checked ~ span {
   opacity: 1;
-  transform: rotate(-45deg) translate(-2px, -2px) scale(.94, 1);
+  transform: rotate(-45deg) translate(2px, 2px) scale(.94, 1);
+  position: relative;
   background: #232323;
 }
 
@@ -180,7 +181,7 @@ body {
 
 .nav-list-mobile input:checked ~ span:nth-last-child(3) {
   opacity: 1;
-  transform: rotate(47deg) scale(.94, 1) translate( 0px, .5px);
+  transform: rotate(47deg) scale(.94, 1) translate(4px, -3px);
 }
 
 .mobile-backdrop {
@@ -213,15 +214,43 @@ body {
   overflow: hidden;
 }
 
+/* Class below for mobile and tablet only */
 .active {
-  color: black;
+  color: var(--main-green);
   text-decoration: underline;
   text-underline-offset: 11.1px;
-  text-decoration-thickness: 2.8px;
+  text-decoration-thickness: 4px;
   z-index: 1;
 }
 
-.nav-list-beige li, .nav-list-green li, .nav-list-white li {
+.active-white {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 11.1px;
+  text-decoration-thickness: 3px;
+  z-index: 1;
+  transition: color 500ms;
+}
+
+.active-white:hover {
+  color: white;
+  transition: color 500ms;
+}
+
+.nav-list-black .active-green .active-white {
+  color: var(--main-green);
+  text-decoration: underline;
+  text-underline-offset: 11.1px;
+  text-decoration-thickness: 3px;
+  z-index: 1;
+}
+
+.nav-list-black .active-white .active-green:hover {
+  color: var(--main-green);
+  transition: color 500ms;
+}
+
+.nav-list-beige li, .nav-list-black li, .nav-list-white li {
   position: relative;
 }
 
@@ -236,7 +265,7 @@ body {
   &:before {
     content: "";
     width: 0;
-    height: 2.3px;
+    height: 3px;
     position: absolute;
     bottom: -10px;
     right: 0;
@@ -261,29 +290,7 @@ body {
   transform: scale(0.98);
 }
 
-/*
-.nav-list-beige a li::after {
-  content: '';
-  background-color: hsl(48, 100%, 85%);
-  position: absolute;
-  left: 0px;
-  bottom: -5px;
-  width: 100%;
-  height: 2.3px;
-  z-index: -1;
-  transition: transform .3s ease-out;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-}
-
-.nav-list-beige a li:hover::after {
-  color: hsl(48, 54%, 89%);
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-*/
-
-.nav-list-green a {
+.nav-list-black a {
   color: black;
   text-decoration: none;
   transition: 500ms;
@@ -294,7 +301,7 @@ body {
   &:before {
     content: "";
     width: 0;
-    height: 2.3px;
+    height: 3px;
     position: absolute;
     bottom: -10px;
     right: 0;
@@ -310,33 +317,10 @@ body {
   }
 }
 
-.nav-list-green a:hover {
+.nav-list-black a:hover {
   color: hsl(96, 24%, 44%);
   transition: color 500ms;
 }
-
-
-/*
-.nav-list-green a li::after {
-  content: '';
-  background-color: hsl(96, 24%, 44%);
-  position: absolute;
-  left: 0px;
-  bottom: -5px;
-  width: 100%;
-  height: 2.3px;
-  z-index: -1;
-  transition: transform .3s ease-out;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-}
-
-.nav-list-green a li:hover::after {
-  color: hsl(96, 24%, 44%);
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-*/
 
 /* shopping-cart */
 .cart {
@@ -975,7 +959,7 @@ body {
     box-shadow: 1px 1px 5px 1px hsla(0, 0%, 11%, 0.9);
   }
 
-  .nav-list-green a {
+  .nav-list-black a {
     color: white;
   }
 
@@ -1134,6 +1118,10 @@ body {
   .about-us-container {
     margin-bottom: 100vw;
     width: 100vw;
+  }
+
+  .shop-container {
+    height: 125rem;
   }
 
   .careers-container, body, html {

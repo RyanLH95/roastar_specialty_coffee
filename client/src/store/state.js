@@ -14,7 +14,7 @@ export const loadCartFromLocalStorage = () => {
 };
 
 export const saveCartToLocalStorage = (cart) => {
-  console.log("Saving to localStorage:", cart); // Debug the saved data
+  console.log("Saving to localStorage:", [...cart]); // Debug the saved data
   if (typeof window !== "undefined" && localStorage) {
     localStorage.setItem("cart", JSON.stringify(cart));
   }
@@ -37,13 +37,14 @@ export const cartSlice = createSlice({
           ...action.payload, // Ensures everything is pushed to cart, including handle
         });
       }
-      console.log("Cart state after adding:", state);
+      console.log("Cart state after adding:", [...state]);
       saveCartToLocalStorage(state); // Saves updated cart to localStorage
     },
 
     removeFromCart: (state, action) => {
       console.log("Removed from cart:", action.payload)
       const updatedCart = state.filter((item) => item.id !== action.payload);
+      console.log("Updated cart after removal:", [...updatedCart])
       saveCartToLocalStorage(updatedCart); // Save updated cart to localStorage
       return updatedCart;
     },
