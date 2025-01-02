@@ -23,10 +23,11 @@ const MobileNav = () => {
         const menuHome = matchPath("/", pathname);
         const menuAboutUs = matchPath("/AboutUs", pathname);
         const menuShop = matchPath("/Shop", pathname);
-        const menuIsMenu = matchPath("Menu", pathname);
-        const menuContactUs = matchPath("ContactUs", pathname);
-        const menuCareers = matchPath("Careers", pathname);
-        const menuProductPage = matchPath("product/:handle", pathname)
+        const menuIsMenu = matchPath("/Menu", pathname);
+        const menuContactUs = matchPath("/ContactUs", pathname);
+        const menuCareers = matchPath("/Careers", pathname);
+        const menuPrivacyNotice = matchPath("/PrivacyNotice", pathname);
+        const menuProductPage = matchPath("/product/:handle", pathname)
 
         // px to determine when change colour on scrollY activates
           if (menuHome && window.scrollY >= 650) {
@@ -40,6 +41,8 @@ const MobileNav = () => {
         } else if (menuContactUs && window.scrollY >= 1) {
             setMenu(true);
         } else if (menuCareers && window.scrollY >= 180) {
+            setMenu(true);
+        } else if (menuPrivacyNotice && window.scrollY >= 1) {
             setMenu(true);
         } else if (menuProductPage && window.scrollY >= 1) {
             setMenu(true);

@@ -41,8 +41,8 @@ const Navbar = () => {
         const isMenu = matchPath("/Menu", pathname)
         const isContactUs = matchPath("/ContactUs", pathname)
         const isCareers = matchPath("/Careers", pathname)
-        const isProductPage = matchPath("/product/:handle", pathname)
         const isPrivacyNotice = matchPath("/PrivacyNotice", pathname)
+        const isProductPage = matchPath("/product/:handle", pathname)
 
           if (isHome && window.scrollY >= 650) {
             setColour(true)
@@ -56,9 +56,9 @@ const Navbar = () => {
             setColour(true)
         } else if (isCareers && window.scrollY >= 180) {
             setColour(true)
-        } else if (isProductPage && window.scrollY >= 1) {
-            setColour(true)
         } else if (isPrivacyNotice && window.scrollY >= 1) {
+            setColour(true)
+        } else if (isProductPage && window.scrollY >= 1) {
             setColour(true)
         } else {
             setColour(false)

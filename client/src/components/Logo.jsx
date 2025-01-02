@@ -12,7 +12,8 @@ const Logo = () => {
   const logoMenu = matchPath("/Menu", pathname);
   const logoContactUs = matchPath("/ContactUs", pathname);
   const logoCareers = matchPath("/Careers", pathname);
-  const logoItemDetails = matchPath("product/:handle", pathname);
+  const logoPrivacyNotice = matchPath("/PrivacyNotice", pathname);
+  const logoProductPage = matchPath("product/:handle", pathname);
 
   
   useEffect(() => {
@@ -29,7 +30,9 @@ const Logo = () => {
         setLogo(true);
       } else if (logoCareers && window.scrollY >= 180){
         setLogo(true);
-      } else if (logoItemDetails && window.scrollY >= 1){
+      } else if (logoPrivacyNotice && window.scrollY >= 1){
+        setLogo(true);
+      } else if (logoProductPage && window.scrollY >= 1){
         setLogo(true);
       } else {
         setLogo(false);
@@ -48,7 +51,7 @@ const Logo = () => {
     <>
       <div className="logo">
         <NavLink reloadDocument to='/'>
-          {/* :hover LOGO EFFECT */}
+          {/* LOGO HOVER EFFECT (DAYTIME) */}
           <img 
             src={logo ? "/logo/Logo ROASTAR-green.webp" : "/logo/Logo ROASTAR-beige.webp"}
             alt="Roastar Logo Hover"
