@@ -1,3 +1,4 @@
+// Function for checkout URL
 export const createCart = async (lineItems) => {
   const response = await fetch(import.meta.env.VITE_SHOPIFY_STORE_URL, {
     method: 'POST',

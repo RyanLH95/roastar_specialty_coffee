@@ -73,6 +73,11 @@ export const fetchProduct = async (handle) => {
             totalInventory
             productType
             descriptionHtml
+            metafield(namespace: "custom", key: "ingredients") {
+              namespace
+              key
+              value
+            }
             images(first: 1) {
               edges {
                 node {
