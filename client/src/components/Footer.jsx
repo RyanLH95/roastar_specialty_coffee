@@ -1,21 +1,23 @@
 import React from 'react'
+import visaIcon from '../../public/icon/payment_visa_icon.svg'
+import masterCardIcon from '../../public/icon/payment_mastercard_icon.svg'
+import paypalIcon from '../../public/icon/payment_paypal_icon.svg'
 import InstagramIcon  from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Link, useLocation } from 'react-router-dom'
 import { Copyright } from 'lucide-react'
 import '../App.css'
 
-const withouSidebarRoutes = ["/submit"];
 
 const Footer = () => {
-  const { pathname } = useLocation();
+  const active = useLocation().pathname;
 
   return (
     <footer className='footer'>
       <div className='footer-container'>
         <div className='footer-address'>
           <img
-            src='/logo/Logo ROASTAR-white.PNG'
+            src='/logo/Logo ROASTAR-white.webp'
             height={80}
             width={180}
           />
@@ -51,15 +53,15 @@ const Footer = () => {
           </p>
         </div>
         <div className='footer-nav'>
-          <div className={`footer-links`}>
-            <Link 
+          <div className={`footer-links ${active === '/AboutUs' ? 'active-footer' : ''}`}>
+            <Link
               reloadDocument 
-              to={'/AboutUs'} 
+              to={'/AboutUs'}
             >
               ABOUT US
             </Link>
           </div>
-          <div className={`footer-links`}>
+          <div className={`footer-links ${active === '/ContactUs' ? 'active-footer' : ''}`}>
             <Link 
               reloadDocument 
               to={'/ContactUs'} 
@@ -67,7 +69,7 @@ const Footer = () => {
               CONTACT US
             </Link>
           </div>
-          <div className={`footer-links`}>
+          <div className={`footer-links ${active === '/Careers' ? 'active-footer' : ''}`}>
             <Link 
               reloadDocument 
               to={'/Careers'} 
@@ -75,7 +77,7 @@ const Footer = () => {
               CAREERS
             </Link>
           </div>
-          <div className={`footer-links`}>
+          <div className={`footer-links ${active === '/Shop' ? 'active-footer' : ''}`}>
             <Link 
               reloadDocument 
               to={'/Shop'} 
@@ -83,10 +85,10 @@ const Footer = () => {
               SHOP
             </Link>
           </div>
-          <div className={`footer-links`}>
+          <div className={`footer-links ${active === '/PrivacyNotice' ? 'active-footer' : ''}`}>
             <Link 
               reloadDocument 
-              to={'/'} 
+              to={'/PrivacyNotice'} 
             >
               PRIVACY NOTICE
             </Link>
@@ -107,8 +109,13 @@ const Footer = () => {
                   left: '-5px'
                 }}
               />
-                Copyright 2024. Roastar Coffee. All Rights Reserved
+                Copyright 2025. Roastar Coffee. All Rights Reserved
             </span>
+          </div>
+          <div className='payment-icons'>
+            <img src={visaIcon} alt="Visa" width="60" />
+            <img src={masterCardIcon} alt="Visa" width="60" />
+            <img src={paypalIcon} alt="Visa" width="60" />
           </div>
         </div>
       </div>

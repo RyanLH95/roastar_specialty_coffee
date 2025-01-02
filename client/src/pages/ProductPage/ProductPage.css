@@ -1,18 +1,11 @@
 /* ProductPage.jsx */
 .product-page-background {
-  background: var(--main-green);
-}
-
-.product-page-container, body, html {
-  height: 90rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 /* If product not found */
-.pnf-container {
-  background: var(--main-green);
-  height: 90rem;
-}
-
 .pnf-container {
   text-align: center;
   color: white;
@@ -58,11 +51,14 @@
 }
 
 .product-details {
-  padding-top: 4em;
+  padding-top: 4rem;
 }
 
 .product-details .product-desc {
+  letter-spacing: 1px;
   color: white;
+  font-weight: 300;
+  font-size: 1rem;
 }
 
 .product-details h2 {
@@ -244,6 +240,14 @@
   background: none;
 }
 
+/* Delivery Information */
+.product-delivery-info {
+  margin-top: 1.5rem;
+  letter-spacing: 1px;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
 /* Related products section */
 .product-content .related-product-title {
   letter-spacing: 1.5px;
@@ -331,30 +335,8 @@
   background: black;
 }
 
-@media all and (max-width: 1271px) {
-  .product-page-container {
-    height: 100rem;
-  }
-}
-
-@media all and (max-width: 1129px) {
-  .product-page-container {
-    height: 102rem;
-  }
-}
-
-@media all and (max-width: 1058px) {
-  .product-page-container {
-    height: 104rem;
-  }
-}
 
 @media all and (max-width: 1000px) {
-  .product-page-container {
-    height: 105rem;
-    margin-bottom: 40vw;
-  }
-
   .product-content {
     text-align: center;
     padding: 5em 2em;
@@ -404,60 +386,8 @@
   }
 }
 
-@media all and (max-width: 861px) {
-  .product-page-container {
-    height: 108rem;
-  }
-}
-
-@media all and (max-width: 839px) {
-  .product-page-container {
-    height: 115rem;
-  }
-}
-
-@media all and (max-width: 839px) {
-  .product-main .product-img {
-    width: 80%;
-  }
-}
-
-@media all and (max-width: 791px) {
-  .product-page-container {
-    height: 113rem;
-  }
-}
-
-@media all and (max-width: 590px) {
-  .product-page-container {
-    height: 145rem;
-  }
-}
-
-@media all and (max-width: 545px) {
-  .product-page-container {
-    height: 147rem;
-  }
-}
-
 @media all and (max-width: 500px) {
-  .product-page-container {
-    height: 148rem;
-  }
-
   .product-main .product-img {
     width: 100%;
-  }
-}
-
-@media all and (max-width: 450px) {
-  .product-page-container {
-    height: 150rem;
-  }
-}
-
-@media all and (max-width: 390px) {
-  .product-page-container {
-    height: 150rem;
   }
 }

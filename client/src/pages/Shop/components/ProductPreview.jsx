@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
 import { previewAnimate } from '../../../assets/popups/product_preview/animation'
@@ -8,6 +8,8 @@ import Backdrop from '../../../assets/popups/product_preview/Backdrop'
 import { Plus, Minus, X } from 'lucide-react'
 import { fetchProduct } from '../../../../../server/api/shopify/products'
 import { createCart } from '../../../../../server/api/shopify/checkout'
+
+const MAX_CART_ITEMS = 10
 
 const ProductPreview = ({ handle, handleClose }) => {
   const cart = useSelector((state) => state.cart);
@@ -38,30 +40,39 @@ const ProductPreview = ({ handle, handleClose }) => {
   }, [handle])
 
   const handleCheckout = async () => {
-    if (!selectedVariant) {
-      alert("Please select variants before proceeding to checkout.")
-    }
     setLoading(true);
+
+    const unselectedOption = product.options.find(
+      (option) => !selectedOptions[option.name]
+    );
+    if (unselectedOption) {
+      alert(`Please select option(s) before proceeding to checkout.`);
+      return
+    }
+    // Ensure selectVariant matches the current selection
+    if (!selectedVariant) {
+      alert("The selected variant is unavailable. Please choose a valid option");
+      return // Stop execution if no valid variant is selected
+    }
+
     try {
-      const lineItems = [
-        {
-          merchandiseId: selectedVariant.id,
-          quantity: counter,
-        }
-      ]
+      const lineItems = [{ 
+        merchandiseId: selectedVariant.id, 
+        quantity: counter 
+      }]
 
       const checkout = await createCart(lineItems);
 
-      if (checkout) {
-        console.log("redirecting to checkout URL", checkout)
-        window.location.href = checkout
-      } else {
-        console.error("Failed to create checkout, no checkout URl")
-      } alert("Failed to create checkout. Please try again")
+      if (!checkout) {
+        throw new Error("Checkout URL is missing or invalid.")
+      } 
+
+      console.log("Redirecting to checkout URL:", checkout)
+      window.location.href = checkout
     } catch (error) {
-      console.error("Checkout Error:", error);
+        console.error("Checkout Error:", error.message || error);
     } finally {
-      setLoading(false);
+        setLoading(false);
     };
   };
 
@@ -118,6 +129,13 @@ const ProductPreview = ({ handle, handleClose }) => {
     if (!selectedVariant) {
       alert("The selected variant is unavailable. Please choose a valid option");
       return // Stop execution if no valid variant is selected
+    }
+
+    const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+
+    if (totalItemsInCart + counter > MAX_CART_ITEMS) {
+      alert(`You can only add up to ${MAX_CART_ITEMS} items to your cart.`);
+      return;
     }
 
     if (selectedVariant && product) {
@@ -244,7 +262,6 @@ const ProductPreview = ({ handle, handleClose }) => {
               <Link 
                 className='view-details' 
                 to={`/product/${handle}`}
-                reloadDocument
               >
                 VIEW DETAILS
               </Link>

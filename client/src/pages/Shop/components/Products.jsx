@@ -10,7 +10,6 @@ const Products = ({ addToCart }) => {
   const [loading, setLoading] = useState(true);
   // State for popup/preview of product
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [inventory, setInventory] = useState(null)
 
   // handles for opening and closing preview of product
   const handleOpenModal = (handle) => setSelectedProduct(handle);
@@ -46,15 +45,13 @@ const Products = ({ addToCart }) => {
             key={node.id}
           >
             {/* Ensure the link is by handle */}
-            <Link
-              to={`/product/${node.handle}`}
-              reloadDocument
-            >
+            <Link to={`/product/${node.handle}`}>
               {node.images.edges.length > 0 && (
                 <img 
                   src={node.images.edges[0].node.src} 
                   alt={node.title} 
                   width={300}
+                  loading='eager'
                 />
               )}
               <h2>{node.title}</h2>

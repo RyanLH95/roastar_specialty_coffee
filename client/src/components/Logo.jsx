@@ -48,29 +48,32 @@ const Logo = () => {
     <>
       <div className="logo">
         <NavLink reloadDocument to='/'>
-          {/* :HOVER LOGO EFFECT */}
+          {/* :hover LOGO EFFECT */}
           <img 
-            src={logo ? "/logo/Logo ROASTAR-green.PNG" : "/logo/Logo ROASTAR-white.PNG"}
-            alt="roastar-logo green"
-            className='roastar-logo green'
+            src={logo ? "/logo/Logo ROASTAR-green.webp" : "/logo/Logo ROASTAR-beige.webp"}
+            alt="Roastar Logo Hover"
+            className='roastar-logo-hover'
             height={50}
-            width={150}  
+            width={150}
+            loading='lazy'
           />
           {/* DAYTIME LOGO */}
           <img 
-            src={logo ? "/logo/Logo ROASTAR-black.PNG" : "/logo/Logo ROASTAR-beige.PNG"}
-            alt="roastar-logo-black/beige"
-            className='roastar-logo beige'
+            src="/logo/Logo ROASTAR-white.webp"
+            alt="Roastar Logo Daytime"
+            className={`roastar-logo-daytime ${logo ? 'logo-active' : ''}`}
             height={50}
-            width={150}  
+            width={150} 
+            loading='eager' 
           />
-          {/* NIGHTIME LOGO / prefers-colors-scheme: dark */}
+          {/* NIGHTTIME LOGO / prefers-colors-scheme: dark */}
            <img 
-            src={logo ? "/logo/Logo ROASTAR-white.PNG" : "/logo/Logo ROASTAR-beige.PNG"}
-            alt="roastar-logo-black/beige"
-            className='roastar-logo white'
+            src="/logo/Logo ROASTAR-white.webp"
+            alt="Roastar Logo Nighttime"
+            className={`roastar-logo-nighttime ${logo ? 'logo-active' : ''}`}
             height={50}
-            width={150}  
+            width={150} 
+            loading='eager' 
           />
         </NavLink>
       </div>

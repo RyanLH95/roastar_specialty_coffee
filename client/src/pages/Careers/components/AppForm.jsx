@@ -110,7 +110,7 @@ const AppForm = ({ handleClose }) => {
           <X size={30}/>
         </button>
         <img 
-          src='../../../../logo/Logo ROASTAR-white.PNG'
+          src='/logo/Logo ROASTAR-white.webp'
           width={150}
         />
         <form onSubmit={handleSubmit} className='app-form'>

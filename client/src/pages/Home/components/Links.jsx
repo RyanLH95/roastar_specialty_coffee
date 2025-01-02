@@ -10,11 +10,11 @@ const Links = () => {
   const open = () => setModalOpen(true);
   
   return (
-    <div className='links-div'>
+    <div className='links-container'>
       <h2>EXPLORE OUR STORE</h2>
       <p>In Shop, at Home or on the Go!</p>
       <div className='link-images'>
-        {/* Link to contact us page (location section) */}
+        {/* LINK TO '/ContactUs' PAGE (location section) */}
         <div className='image-one'>
           {/* hash property is to identify id in GoogleMaps.jsx */}
           <Link 
@@ -24,7 +24,7 @@ const Links = () => {
               hash: '#location'
             }}>
             <img
-              src='../../../images/location_link_image.png'
+              src='/images/location_link_image.webp'
               width={300}
               height={300}
             />
@@ -38,7 +38,7 @@ const Links = () => {
           onClick={() => modalOpen ? close() : open()}
         >
           <img
-            src='../../../images/delivery_link_image.png'
+            src='/images/delivery_link_image.webp'
             width={300}
             height={300}
           />
@@ -50,11 +50,11 @@ const Links = () => {
           { modalOpen && <Content modalOpen={modalOpen} handleClose={close} />}
         </AnimatePresence>
         
-        {/* Link to Roastar Shop */}
+        {/* LINK TO '/Shop' */}
         <div className='image-three'>
           <Link reloadDocument to='/Shop'>
             <img
-              src='../../../images/shop_items.png'
+              src='/images/roastar_products.webp'
               width={300}
               height={300}
             />

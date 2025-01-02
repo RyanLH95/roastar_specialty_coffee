@@ -1,14 +1,27 @@
+.contact-us-container {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.contact-us-container .footer {
+  margin-top: 5rem;
+}
+
 .contact-us-header {
+  background: var(--main-green);
   text-align: center;
-  padding-top: 8em;
+  padding-top: 3em;
   height: 250px;
 }
 
 .contact-us-header h1 {
-  font-size: 2.5rem;
-  font-weight: 500;
-  color: var(--main-beige);
-  letter-spacing: 1.5px;
+  padding-top: 1.5em;
+  font-size: 3rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 2px;
 }
 
 .cu-container {
@@ -19,9 +32,11 @@
   padding-top: 3em;
 }
 
-.cu-container h2 {
-  font-weight: 200;
-  color: hsl(0, 0%, 18%);
+.cu-container p {
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  color: black;
   margin-right: 1em;
   margin-left: 1em;
 }

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/state';
 import { fetchProduct, fetchRelatedProducts } from '../../../../server/api/shopify/products';
 import './ProductPage.css';
 import '../../App.css';
 import { Minus, Plus, ChevronLeft } from 'lucide-react';
+import Footer from '../../components/Footer';
+
+const MAX_CART_ITEMS = 10
 
 const ProductPage = () => {
+  const cart = useSelector((state) => state.cart);
   const { handle } = useParams();
   const dispatch = useDispatch();
 
@@ -55,6 +59,11 @@ const ProductPage = () => {
     
     getRelatedProducts();
     getProduct();
+    document.body.style.backgroundColor = 'var(--main-green)';
+
+    return () => {
+      document.body.style.backgroundColor = ''
+    }
   }, [handle]);
 
   const handleVariantChange = (option, value) => {
@@ -110,6 +119,13 @@ const ProductPage = () => {
       alert("The selected variant is unavailable. Please choose valid options.");
       return // Stop execution if no valid variant is selected
     }
+
+    const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+
+    if (totalItemsInCart + counter > MAX_CART_ITEMS) {
+      alert(`You can only add up to ${MAX_CART_ITEMS} items to your cart.`);
+      return;
+    }
     
     if (selectedVariant && product) {
       console.log({
@@ -156,11 +172,14 @@ const ProductPage = () => {
                 alt={product.title} 
                 width={600}
                 className='product-img'
+                loading='eager'
               />
             )}
             <div className='product-details'>
               {/* PRODUCT DETAILS */}
               <div className='product-desc' dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+              {/* INGREDIENTS (IF APPLICABLE) */}
+              <p>{/* product.metafield?.key */}</p>
               {/* PRODUCT PRICE */}
               <h2>
                 £{
@@ -226,24 +245,26 @@ const ProductPage = () => {
               >
                 ADD TO CART
               </button>
+              {/* DELIVERY & SHIPPING INFORMATION */}
+              <div className='product-delivery-info'>
+                <h2>DELIVERY & SHIPPING</h2>
+                <p style={{ color: 'white', marginTop: '1rem'}}>Shipping is processed within 24 hours and we aim to deliver between 3 - 5 days.</p>
+                <p style={{ color: 'white', marginTop: '1rem' }}>Free delivery for orders above £25.</p>
+              </div>
             </div>
           </div>
           {/* RELATED PRODUCTS*/}
           <h2 className='related-product-title'>OTHER PRODUCTS</h2>
           <div className='related-product-list'>
-            {
-              relatedProducts
-              .filter(({ node }) => node.handle !== product.handle)
-              .slice(0,4).map(({ node }) => (
+            {relatedProducts
+                .filter(({ node }) => node.handle !== product.handle)
+                .slice(0,4).map(({ node }) => (
                 <div 
                   className='related-product-card'
                   key={node.id}
                 >
                   {/* Ensure the link is by handle */}
-                  <Link
-                    to={`/product/${node.handle}`}
-                    reloadDocument
-                  >
+                  <Link to={`/product/${node.handle}`} reloadDocument>
                     {node.images.edges.length > 0 && (
                       <img 
                         src={node.images.edges[0].node.src} 
@@ -262,6 +283,7 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

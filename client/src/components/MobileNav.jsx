@@ -37,7 +37,7 @@ const MobileNav = () => {
             setMenu(true);
         } else if (menuIsMenu && window.scrollY >= 0) {
             setMenu(true);
-        } else if (menuContactUs && window.scrollY >= 180) {
+        } else if (menuContactUs && window.scrollY >= 1) {
             setMenu(true);
         } else if (menuCareers && window.scrollY >= 180) {
             setMenu(true);
@@ -61,7 +61,7 @@ const MobileNav = () => {
   return (
     <>
       <button
-        className={`nav-list-mobile ${menu ? 'nav-list-mobile-beige nav-list-mobile-green' : 'nav-list-mobile-beige'}`}
+        className={`nav-list-mobile ${menu ? 'nav-list-mobile-white nav-list-mobile-black' : 'nav-list-mobile-white'}`}
         onClick={() => (menuOpen ? close() : open())} 
       >
         <input name='menu' type='checkbox' />

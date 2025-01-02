@@ -8,7 +8,7 @@ const Points = () => {
       </div>
       <div className='points-banner'>
         <img 
-          src='../../../images/image-four.png'
+          src='images/roastar_coffee_image.png'
           width={800}
         />
       </div>

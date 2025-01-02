@@ -8,7 +8,7 @@ import { shades } from '../theme.js'
 import Logo from './Logo.jsx'
 import '../App.css'
 import MobileNav from './MobileNav.jsx'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // Array that features all nav-links required. Will return in .map component
 const navigation = [ 
@@ -18,8 +18,6 @@ const navigation = [
   {_id:104, title: 'MENU', href: '/Menu'},
   {_id:105, title: 'CONTACT US', href: '/ContactUs'},
 ];
-
-const withoutSidebarRoutes = ["/submit"];
 
 const Navbar = () => {
     const { pathname } = useLocation();
@@ -44,6 +42,7 @@ const Navbar = () => {
         const isContactUs = matchPath("/ContactUs", pathname)
         const isCareers = matchPath("/Careers", pathname)
         const isProductPage = matchPath("/product/:handle", pathname)
+        const isPrivacyNotice = matchPath("/PrivacyNotice", pathname)
 
           if (isHome && window.scrollY >= 650) {
             setColour(true)
@@ -58,6 +57,8 @@ const Navbar = () => {
         } else if (isCareers && window.scrollY >= 180) {
             setColour(true)
         } else if (isProductPage && window.scrollY >= 1) {
+            setColour(true)
+        } else if (isPrivacyNotice && window.scrollY >= 1) {
             setColour(true)
         } else {
             setColour(false)
@@ -79,7 +80,7 @@ const Navbar = () => {
         <Logo />
         <MobileNav />
         <div className='item-container'>
-          <ul className={`nav-list ${colour ? 'nav-list-beige nav-list-black' : 'nav-list-beige'}`}>
+          <ul className={`nav-list ${colour ? 'nav-list-white nav-list-black' : 'nav-list-white'}`}>
             {
               navigation.map((item) => (
                 <NavLink 
@@ -87,14 +88,14 @@ const Navbar = () => {
                   to={item?.href} 
                   key={item._id}
                   className={({ isActive }) => 
-                    `${isActive && colour ? 'active-green' : 'active-white'}`
+                    `${isActive && colour ? 'active-green' : 'active-beige'}`
                   }
                 >
                   <li className={`mobile ${
                     active === item?.href 
                       ? colour 
-                        ? 'nav-list-black active-white active-green' 
-                        : 'nav-list-black active-white'
+                        ? 'nav-list-black active-beige active-green' 
+                        : 'nav-list-black active-beige'
                       : 'nav-list-black'
                     }`}
                   > 
@@ -118,14 +119,15 @@ const Navbar = () => {
                   height: '14px',
                   minWidth: '13px',
                   zIndex: 100,
+                  fontVariantNumeric: 'tabular-nums',
                 }
               }}
             >
               <button 
-                className={`cart-btn ${colour ? 'cart-beige cart-black' : 'cart-beige'}` }
+                className={`cart-btn ${colour ? 'cart-white cart-black' : 'cart-white'}` }
                 onClick={() => cartOpen ? close() : open()}
               >
-                <ShoppingCart 
+                <ShoppingCart
                   style={{
                     position: 'absolute', 
                     left: '6px', 

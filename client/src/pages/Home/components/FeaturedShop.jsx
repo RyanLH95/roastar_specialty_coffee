@@ -11,7 +11,7 @@ const FeaturedShop = () => {
         </div>
         <div className='fs-image'>
           <img 
-            src='../../../products/roastar_coffeebean_gift_box.png'
+            src='/images/roastar_products.webp'
             width={700}
           />
         </div>

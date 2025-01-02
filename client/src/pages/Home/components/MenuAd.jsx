@@ -5,9 +5,10 @@ const MenuAd = () => {
   return (
     <div className="menu-container">
       <img 
-        src="../../../images/imageThree.png"
-        height={900}
+        src="/images/roastar_menu_image.webp"
+        height={1000}
         width={1440}
+        loading='lazy'
       />
       <div className='menu-content'> 
         <div className='menu-text'>
@@ -19,7 +20,7 @@ const MenuAd = () => {
           </p>
           <div className='menu-link'>
             <Link to='/Menu' reloadDocument>
-              <button>VIEW OUR MENU</button>
+              <button>VIEW MENU</button>
             </Link>
           </div>
         </div>

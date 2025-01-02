@@ -9,11 +9,12 @@
 }
 
 html {
-  height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-  min-height: 100%;
+  margin-bottom: 100px;
 }
 
 :root {
@@ -22,6 +23,7 @@ body {
   --hover-beige: hsl(47, 48%, 73%);
   --main-black: rgb(34, 34, 34);
   --btn-green: hsl(152, 67%, 33%);
+  --text-font: 1.2rem;
 }
 
 /* For App.jsx */
@@ -32,7 +34,7 @@ body {
   flex: 1;
 }
 
-/* navbar.jsx CSS */
+/* Navbar.jsx */
 .navbarbg {
   background-color: hsl(0, 0%, 100%, 90%);
   backdrop-filter: blur(30px); 
@@ -54,6 +56,49 @@ body {
   transition: background-color 500ms;
 }
 
+/* Logo.jsx CSS */
+.logo {
+  position: relative; 
+  top: 6px; 
+  left: 10px;
+  z-index: 100;
+}
+
+.roastar-logo-daytime {
+  position: absolute;
+  filter: brightness(1);
+  transition: filter 0.5s;
+}
+
+.roastar-logo-daytime.logo-active {
+  filter: brightness(0);
+}
+
+/* during nighttime */
+.roastar-logo-nighttime {
+  position: absolute;
+  filter: brightness(1);
+  opacity: 0;
+}
+
+.roastar-logo-nighttime.logo-active {
+  filter: brightness(1);
+}
+
+.roastar-logo-hover {
+  z-index: 99;
+  position: absolute; 
+  left: 0px;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 500ms ease;
+}
+
+.roastar-logo-hover:hover {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+/* Navbar.jsx items */
 .nav-container {
   position: relative;
   font-weight: 800;
@@ -79,8 +124,112 @@ body {
   letter-spacing: 1.5px;
 }
 
-/* For @media-query all and (max-width: 1000px) */
+/* For mobile and tablet only */
+.active {
+  color: var(--main-green);
+  text-decoration: underline;
+  text-underline-offset: 11.1px;
+  text-decoration-thickness: 4px;
+  z-index: 1;
+}
 
+/* For desktop */
+.active-beige {
+  color: var(--main-beige);
+  text-decoration: underline;
+  text-underline-offset: 11.1px;
+  text-decoration-thickness: 3px;
+  z-index: 1;
+  transition: color 500ms;
+}
+
+.active-beige:hover {
+  color: var(--main-beige);
+  transition: color 500ms;
+}
+
+.nav-list-black .active-green .active-beige {
+  color: var(--main-green);
+  text-decoration: underline;
+  text-underline-offset: 11.1px;
+  text-decoration-thickness: 3px;
+  z-index: 1;
+}
+
+.nav-list-black .active-beige .active-green:hover {
+  color: var(--main-green);
+  transition: color 500ms;
+}
+
+.nav-list-white li, .nav-list-black li {
+  position: relative;
+}
+
+.nav-list-white a {
+  color: white;
+  text-decoration: none;
+  transition: 500ms;
+  text-decoration: none;
+  font-size: 1em;
+  position: relative;
+  transition: all 0.6s;
+  &:before {
+    content: "";
+    width: 0;
+    height: 3px;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    background-color: white;
+    transition: all 0.3s;
+  }
+  &:hover {
+    &:before {
+      width: 100%;
+      left: 0;
+      background-color: var(--main-beige);
+    }
+  }
+}
+
+.nav-list-white a:hover {
+  color: var(--main-beige);
+  transition: color 500ms;
+}
+
+.nav-list-black a {
+  color: black;
+  text-decoration: none;
+  transition: 500ms;
+  text-decoration: none;
+  font-size: 1em;
+  position: relative;
+  transition: all 0.6s;
+  &:before {
+    content: "";
+    width: 0;
+    height: 3px;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    background-color: black;
+    transition: all 0.3s;
+  }
+  &:hover {
+    &:before {
+      width: 100%;
+      left: 0;
+      background-color: var(--main-green);
+    }
+  }
+}
+
+.nav-list-black a:hover {
+  color: var(--main-green);
+  transition: color 500ms;
+}
+
+/* For @media-query all and (max-width: 1000px) */
 /* hamburger menu main div from MobileMenu.jsx */
 .nav-list-mobile {
   position: absolute;
@@ -117,7 +266,7 @@ body {
   -webkit-touch-callout: none;
 }
 
-.nav-list-mobile-beige a span {
+.nav-list-mobile-white a span {
   background: none;
 }
 
@@ -132,17 +281,17 @@ body {
   transform-origin: 4px 0px;
 }
 
-.nav-list-mobile-beige span {
-  background: var(--main-beige);
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+.nav-list-mobile-white span {
+  background: white;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+              background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
               opacity 0.55s ease;
 }
 
-.nav-list-mobile-green span {
+.nav-list-mobile-black span {
   background: black;
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+              background 0.5s cubic-bezier(0.77, 0.2,0.05, 1.0),
               opacity 0.55s ease;
 }
 
@@ -214,119 +363,11 @@ body {
   overflow: hidden;
 }
 
-/* Class below for mobile and tablet only */
-.active {
-  color: var(--main-green);
-  text-decoration: underline;
-  text-underline-offset: 11.1px;
-  text-decoration-thickness: 4px;
-  z-index: 1;
-}
-
-.active-white {
-  color: white;
-  text-decoration: underline;
-  text-underline-offset: 11.1px;
-  text-decoration-thickness: 3px;
-  z-index: 1;
-  transition: color 500ms;
-}
-
-.active-white:hover {
-  color: white;
-  transition: color 500ms;
-}
-
-.nav-list-black .active-green .active-white {
-  color: var(--main-green);
-  text-decoration: underline;
-  text-underline-offset: 11.1px;
-  text-decoration-thickness: 3px;
-  z-index: 1;
-}
-
-.nav-list-black .active-white .active-green:hover {
-  color: var(--main-green);
-  transition: color 500ms;
-}
-
-.nav-list-beige li, .nav-list-black li, .nav-list-white li {
-  position: relative;
-}
-
-.nav-list-beige a {
-  color: hsl(48, 54%, 89%);
-  text-decoration: none;
-  transition: 500ms;
-  text-decoration: none;
-  font-size: 1em;
-  position: relative;
-  transition: all 0.6s;
-  &:before {
-    content: "";
-    width: 0;
-    height: 3px;
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    background-color: hsl(48, 100%, 85%);
-    transition: all 0.3s;
-  }
-  &:hover {
-    &:before {
-      width: 100%;
-      left: 0;
-      background-color: white;
-    }
-  }
-}
-
-.nav-list-beige a:hover {
-  color: white;
-  transition: color 500ms;
-}
-
-.nav-list-beige a:active, .nav-list-green a:active {
-  transform: scale(0.98);
-}
-
-.nav-list-black a {
-  color: black;
-  text-decoration: none;
-  transition: 500ms;
-  text-decoration: none;
-  font-size: 1em;
-  position: relative;
-  transition: all 0.6s;
-  &:before {
-    content: "";
-    width: 0;
-    height: 3px;
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    background-color: black;
-    transition: all 0.3s;
-  }
-  &:hover {
-    &:before {
-      width: 100%;
-      left: 0;
-      background-color: hsl(96, 24%, 44%);
-    }
-  }
-}
-
-.nav-list-black a:hover {
-  color: hsl(96, 24%, 44%);
-  transition: color 500ms;
-}
-
 /* shopping-cart */
 .cart {
   position: relative;
-  margin-top: -2em;
-  margin-right: 1em;
+  margin-top: -2rem;
+  margin-right: 1rem;
   float: right;
 }
 
@@ -352,17 +393,17 @@ body {
   transform: scale(0.96);
 }
 
-.cart-beige {
+.cart-white {
   background-color: hsl(96, 24%, 44%, 0%);
-  color: hsl(48, 54%, 89%);
-  border: 1.5px solid hsl(48, 54%, 89%);;
+  color: white;
+  border: 1.5px solid white;
   transition: 
     background-color 500ms, 
     color 500ms, 
     border 500ms;
 }
 
-.cart-beige:hover {
+.cart-white:hover {
   background-color: hsl(96, 24%, 44%);
   border: 1.5px solid hsl(0, 0%, 0%);
   color: hsl(0, 0%, 0%);
@@ -370,11 +411,6 @@ body {
     background-color 500ms, 
     color 500ms, 
     border 500ms;
-}
-
-.cart-beige:hover div {
-  color: white;
-  background: black;
 }
 
 .cart-black {
@@ -496,12 +532,12 @@ body {
 .cart-track p {
   text-align: center;
   color: black;
-  transition: 300ms;
+  transition: color 300ms;
 }
 
 .cart-track p:hover {
   color: var(--main-green);
-  transition: 300ms;
+  transition: color 300ms;
 }
 
 .cart-slide {
@@ -607,7 +643,7 @@ body {
   font-weight: 500;
   font-size: 0.6em;
   color: hsl(0, 0%, 0%, 50%);
-  margin-top: 0.5rem;
+  margin-top: 0.65rem;
   text-align: left;
   margin-right: -6rem;
 }
@@ -658,7 +694,9 @@ body {
 
 .cart-quantity-handle p {
   font-variant-numeric: tabular-nums;
-  margin-top: 0.4em;
+  font-size: 0.9rem;
+  margin-top: -3.5px;
+  align-self: center;
   padding-left: 0.7em;
   padding-right: 0.7em;
   font-weight: 300;
@@ -690,11 +728,12 @@ body {
 }
 
 .cart-subtotal {
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   font-weight: 400;
 }
 
 .cart-subtotal span {
+  font-variant-numeric: tabular-nums;
   float: right;
   font-weight: 600;
 }
@@ -767,46 +806,13 @@ body {
     background 300ms;
 }
 
-/* Logo.jsx CSS */
-.logo {
-  position: relative; 
-  top: 6px; 
-  left: 10px;
-  z-index: 100;
-}
-
-.logo:active {
-  position: absolute;
-  transform: scale(0.99);
-}
-
-.beige {
-  position: absolute;
-}
-
-.white {
-  position: absolute;
-  opacity: 0;
-}
-
-.green {
-  z-index: 99;
-  position: absolute; left: -1px;
-  opacity: 0;
-  transition: opacity 500ms;
-}
-
-.green:hover {
-  opacity: 1;
-  transition: opacity 500ms;
-}
-
 /* For Footer.jsx */
 .footer {
   width: 100vw;
   height: 400px;
   text-align: center;
   position: relative; 
+  top: 6.5rem;
   background-color: hsl(96, 24%, 44%);
   /*background-color: hsl(0%, 0%, 11%) */ 
   bottom: 0px;
@@ -832,6 +838,14 @@ body {
   list-style-type: none;
 }
 
+.active-footer {
+  color: white;
+  text-decoration: underline ;
+  text-underline-offset: 11.4px;
+  text-decoration-thickness: 2px;
+  z-index: 1;
+}
+
 .footer-links a {
   color: white;
   text-decoration: none;
@@ -845,11 +859,11 @@ body {
   &:before {
     content: "";
     width: 0;
-    height: 2.3px;
+    height: 2px;
     position: absolute;
     bottom: -10px;
     right: 0;
-    background-color: black;
+    background-color: white;
     transition: all 0.3s;
   }
   &:hover {
@@ -908,43 +922,11 @@ body {
   color: white;
 }
 
-/* For Footer.jsx */
-.container, body, html {
-  height: 375rem; /* original - height: 330rem */
+.payment-icons {
+  display: flex;
+  gap: 30px;
 }
-
-.about-us-container, body, html {
-  height: 135rem;
-}
-
-.shop-container, body, html {
-  height: 90rem;
-}
-
-.shop-container {
-  background-image: linear-gradient(var(--main-green), hsl(0, 0%, 100%));
-}
-
-.careers-container, body, html {
-  height: 80rem;
-}
-
-.careers-container {
-  background-image: linear-gradient(var(--main-green), hsl(0, 0%, 100%));
-}
-
-.contact-us-container, body, html {
-  height: 145rem;
-}
-
-.contact-us-container {
-  background-image: linear-gradient(var(--main-green), hsl(0, 0%, 100%));
-}
-
-.submit-container, body, html {
-  height: 21.95rem;
-}
-
+/* For submit when someone submits an application */
 .submit-container {
   background: grey;
   height: 100%;
@@ -961,30 +943,26 @@ body {
 
   .nav-list-black a {
     color: white;
+    &:before {
+      background-color: white;
+    }
   }
 
-  .beige {
+  .roastar-logo-daytime {
     opacity: 0;
   }
 
-  .white {
+  .roastar-logo-nighttime {
     opacity: 1;
   }
 
-  .nav-list-mobile-green span {
+  .nav-list-mobile-black span {
     background: white;
-
   }
 
   .cart-black {
     color: white;
     border: 1.5px solid white;
-  }
-}
-
-@media all and (max-width: 1027px) {
-  .shop-container {
-    height: 120rem;
   }
 }
 
@@ -1007,12 +985,7 @@ body {
     left: -4.6em;
   }
 
-  .logo:active {
-    position: relative;
-    transform: scale(0.99);
-  }
-
-  .green {
+  .roastar-logo-hover {
     position: absolute;
     top: 0;
     left: 49.9vw;
@@ -1107,69 +1080,12 @@ body {
     outline: none;
   }
 
-  .container, body, html {
-    height: 450rem;
-  }
-
-  .about-us-container, body, html {
-    height: 130rem;
-  }
-
-  .about-us-container {
-    margin-bottom: 100vw;
-    width: 100vw;
-  }
-
-  .shop-container {
-    height: 125rem;
-  }
-
-  .careers-container, body, html {
-    height: 80rem;
+  .payment-icons {
+    justify-content: center;
   }
 
   .careers-container {
     background-image: linear-gradient(var(--main-green), hsl(0, 0%, 100%));
     width: 100vw;
-  }
-}
-
-@media all and (max-width: 800px) {
-  .container, body, html {
-    height: 395rem;
-  }
-
-  .container {
-    margin-bottom: 90vw;
-  }
-
-  .about-us-container, body, html {
-    height: 130rem;
-  }
-
-  .careers-container, body, html {
-    height: 80rem;
-  }
-}
-
-@media all and (max-width: 687px) {
-  .shop-container {
-    height: 195rem;
-  }
-}
-
-@media all and (max-width: 600px) {
-  .careers-container, body, html {
-    height: 90rem;
-  }
-}
-
-@media all and (max-width: 400px) {
-  .about-us-container, body, html {
-    height: 120rem;
-  }
-
-  .careers-container, body, html {
-    height: 90rem;
   }
 }

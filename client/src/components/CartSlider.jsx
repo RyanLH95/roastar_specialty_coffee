@@ -5,8 +5,6 @@ import { fetchProducts } from '../../../server/api/shopify/products';
 import Loader from '../pages/Shop/components/Loader';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
 
 const CartSlider = () => {
   const [products, setProducts] = useState([]);
@@ -28,7 +26,7 @@ const CartSlider = () => {
     getProducts();
   }, [])
 
-  if (loading) return <Loader />
+  if (loading) return 
   
   return (
     <div className='cart-slider'>
@@ -39,7 +37,7 @@ const CartSlider = () => {
         loop={true}
         autoplay={{ delay: 3000 }}
       >
-        {products.map(({ node }) => (
+        {products.map(({ node }, index) => (
           <SwiperSlide 
             key={node.id} 
             className='cart-track' 
@@ -52,6 +50,7 @@ const CartSlider = () => {
                   alt={node.title}
                   width={150}
                   className='cart-slide'
+                  loading={index < 2 ? 'eager' : 'lazy'}
                 />
               )}
               <p>{node.title}</p>

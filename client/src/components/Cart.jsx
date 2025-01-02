@@ -92,7 +92,7 @@ const Cart = ({ handleClose }) => {
               {cart.length === 0 ? (
                 <div className='cart-is-empty'>
                   <p className=''>YOUR CART IS EMPTY</p>
-                  <Link to='/Shop'><button className='continue'>CONTINUE SHOPPING</button></Link>
+                  <Link to='/Shop' reloadDocument><button className='continue'>CONTINUE SHOPPING</button></Link>
                   <CartSlider />
                 </div>
               ) : (
@@ -102,7 +102,7 @@ const Cart = ({ handleClose }) => {
                       <div className='cart-item-container' key={item.id}>
                         <div className='cart-image'>
                           <Link to={`/product/${item.handle}`} reloadDocument>
-                            <img src={item.image} alt={item.title} width={100}/>
+                            <img src={item.image} alt={item.title} width={100} loading='lazy'/>
                           </Link>
                         </div>
                         <div className='cart-title'>
@@ -132,13 +132,19 @@ const Cart = ({ handleClose }) => {
                   <div className='cart-bottom-section'>
                     <p className='tax-and-shipping'>Tax and shipping is calculated at checkout</p>
                     <p className='cart-subtotal'>SUBTOTAL<span>£{subtotal.toFixed(2)} GBP</span></p>
+                    {/* CHECKOUT BUTTON */}
                     <button 
                       onClick={handleCheckout}
                       className='checkout'
                     >
                       {loading ? 'CHECKOUT' : 'Processing...'}
                     </button>
-                    <Link to='/Shop'><button className='continue'>CONTINUE SHOPPING</button></Link>
+                    {/* CONTINUE SHOPPING BUTTON */}
+                    <Link to='/Shop' reloadDocument>
+                      <button className='continue'>
+                        CONTINUE SHOPPING
+                      </button>
+                    </Link>
                   </div>
                 </>
               )} 
